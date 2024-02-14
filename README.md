@@ -5,6 +5,10 @@ initialization of DRM systems. This tool uses code from the Rust crate
 [pssh-box](https://crates.io/crates/pssh-box) compiled to WASM, and runs fully in your web browser
 (there is no server backend; the tool will work fully offline once loaded).
 
+> [!TIP]
+> You can [try out the tools in your browser](https://emarsden.github.io/pssh-box-wasm/). 
+
+
 PSSH boxes are used:
 
 - in an MP4 box of type `pssh` in an MP4 fragment (CMAF/MP4/ISOBMFF containers)
