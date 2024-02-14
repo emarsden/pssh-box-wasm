@@ -38,7 +38,7 @@ jobs:
            rm -rf dist/
            wasm-pack build --release --target web
            mkdir dist
-           cp -r html dist
+           cp -r html/* dist
            # The generated WebAssembly
            cp -r pkg dist
            find dist -type d -print0 | xargs -0 chmod 755
