@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PSSH box decoder</title>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.0/pico.classless.amber.min.css"
+      integrity="sha512-eoG3B3AJGSRXIEn/4X2/QrbAXRM1Bp+JNA4QKVdLAwno9AOv56TZo07rojZK4NHiMigWAMFM2YkZv986MsGwkg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="data:,">
+    <meta name="description" content="Decode a DRM PSSH box directly in your browser (WASM)." />
+  </head>
+  <body>
+    <main>
+      <noscript>
+        <article style="backgroundColor:#F08080">
+          This site's functionality is implemented in WebAssembly, and requires Javascript.
+        </article>
+      </noscript>
+    <nav>
+      <ul>
+        <li><h1>PSSH box decoder</h1></li>
+        <li><img src="img/beta.svg" style="width:2em">
+      </ul>
+      <ul>
+        <li><img src="img/anvil.svg" style="width:1em"> <a href="generate.html">Generate Widevine PSSH</a></li> |
+        <li><a href="fetch-init.html">Fetch init segment</a></li>
+      </ul>
+    </nav>
+     <form>
+      <textarea id="pssh" class="form-input" name="pssh"
+        data-tooltip="The PSSH box (DRM initialization data)"
+        pattern="[0-9ABCDEFabcdef+=]+"
+        placeholder="PSSH..."></textarea>
+      <fieldset>
+        <legend>Input format:</legend>
+          <label><input type="radio" name="fmt" id="fmt_base64" checked />Base64 (normal format in an <tt>mpd</tt> manifest)</label>
+          <label><input type="radio" name="fmt" id="fmt_hex" />Hex (Base 16)</label>
+      </fieldset>
+      <button id="go" data-tooltip="Decode PSSH">Decode</button>
+     </form>
+
+    <div style="margin-top:2em;padding:1em" id="output"></div>
+
+    <p style="margin-top:2em">This tool decodes a <abbr title="Protection System Specific
+    Header">PSSH</abbr> box or sequence of <abbr title="Protection System Specific
+    Header">PSSH</abbr> boxes that are used to initialize <abbr title="Digital Rights
+    Management">DRM</abbr> systems for streaming media. You will typically find a
+    <abbr title="Protection System Specific Header">PSSH</abbr> box in a DASH MPD manifest inside a
+    <tt>&lt;cenc:pssh&gt;</tt> element, or in the initialization segment of a media stream, within a
+    <tt>pssh</tt> box in the MP4 fragment.</p>
+
+    <p>This tool is implemented in <a href="https://webassembly.org/">WebAssembly</a> (WASM) and
+    runs fully inside your web browser (there is no server backend; the tool will work fully
+    offline). It supports the following <abbr title="Digital Rights Management">DRM</abbr> systems:
+
+    <ul>
+    <li> <a href="https://www.widevine.com/solutions/widevine-drm">Widevine</a>, owned by Google, widely used for DASH streaming
+    <li> <a href="https://www.microsoft.com/playready/overview/">PlayReady</a>, owned by Microsoft, widely used for DASH streaming
+    <li> <a href="https://irdeto.com/video-entertainment/multi-drm/">Irdeto</a>
+    <li> <a href="https://www.marlin-community.com/">Marlin</a>
+    <li> <a href="https://developer.huawei.com/consumer/en/hms/huawei-wiseplay/">WisePlay</a>, owned by Huawei
+    <li> Common Encryption (CENC)
+    </ul>
+    </main>
+
+    <hr>
+    <footer style="font-size:small;display:flex;justify-content:space-between">
+    <span>Version: <span id="version"></span></span>
+    <span><img src="img/github.svg" style="width:2em;vertical-align:bottom">
+      <a href="https://github.com/emarsden/pssh-box-wasm/">GitHub repository</a></span>
+    <span>WebAssembly <img src="img/webassembly.svg" style="width:2em;vertical-align:bottom"> made with Rust
+      <img src="img/rustacean.svg" style="width:2em;vertical-align:bottom"></span>
+    </footer>
+
+    <script type="module">
+    import init, { pssh_base64_to_html, pssh_hex_to_html, code_version } from "./pkg/pssh_box_wasm.js";
+      init().then(() => {
+        document.getElementById("version").innerHTML = code_version();
+      });
+
+      document.getElementById("go").addEventListener("click", function(e) {
+          e.preventDefault();
+          let input = document.getElementById("pssh").value.trim();
+          let out = document.getElementById("output");
+          let decoded;
+          try {
+             if (document.getElementById("fmt_base64").checked) {
+                decoded = pssh_base64_to_html(input);
+             } else {
+                decoded = pssh_hex_to_html(input);
+             }
+             out.innerHTML = "<strong>Decoded</strong><br>" + decoded;
+             out.style.backgroundColor = "#CCC";
+          } catch (e) {
+             out.innerHTML = "<img src='img/error.svg' style='width:1em'>&nbsp;" + 
+               e.toString()
+               .replace("Error:", "<strong>Error</strong>:")
+               .replace("\n", "<br>");
+             out.style.backgroundColor = "rgba(255, 10, 10, 0.2)";
+          }
+      });
+    </script>
+   </body>
+</html>
