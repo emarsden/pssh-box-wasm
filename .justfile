@@ -12,7 +12,7 @@ wasm2:
 
 
 serve:
-   python3 -m http.server
+   cd html && python3 -m http.server
 
 
 # for use with twiggy ("cargo install twiggy")
