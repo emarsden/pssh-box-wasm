@@ -19,6 +19,6 @@ jobs:
            version: 'latest'
 
       - run: |
-        cargo check
-        cargo build
-        wasm-pack build --release --target web
+          cargo check
+          cargo build
+          wasm-pack build --release --target web
