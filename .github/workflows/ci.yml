@@ -1,0 +1,24 @@
+on: [push]
+
+name: build
+
+jobs:
+  check:
+    name: check build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain
+        with:
+           toolchain: stable
+           targets: wasm32-unknown-unknown
+
+      - uses: jetli/wasm-pack-action@v0.4.0
+        with:
+           version: 'latest'
+
+      - run: |
+        cargo check
+        cargo build
+        wasm-pack build --release --target web
