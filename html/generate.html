@@ -10,18 +10,24 @@
       crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="data:," />
     <meta name="description" content="Generate a Widevine PSSH box directly in your browser (WASM)." />
+    <style>
+    body {
+      font-size:15px;
+    }
+    </style>
   </head>
   <body>
     <main>
       <noscript>
-        <article style="backgroundColor:#F08080">
+        <article style="background-color:#F08080;margin:2em">
+          <img src="img/error.svg" style="width:1em" alt="">
           This site's functionality is implemented in WebAssembly, and requires Javascript.
         </article>
       </noscript>
       <nav>
         <ul>
-          <li><h1>PSSH box generator</h1></li>
-          <li><img src="img/beta.svg" style="width:2em">
+          <li><h1><img src="img/anvil.svg" style="width:1em" alt=""> PSSH box generator</h1></li>
+          <li><img src="img/beta.svg" style="width:2em;position:relative;top:-3ex;" alt="">
         </ul>
         <ul>
           <li><a href="decode.html">Decode PSSH</a></li> |

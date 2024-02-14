@@ -13,18 +13,19 @@
   <body>
     <main>
       <noscript>
-        <article style="backgroundColor:#F08080">
+        <article style="background-color:#F08080;margin:2em">
+          <img src="img/error.svg" style="width:1em" alt="">
           This site's functionality is implemented in WebAssembly, and requires Javascript.
         </article>
       </noscript>
     <nav>
       <ul>
         <li><h1>Fetch PSSH data</h1></li>
-        <li><img src="img/beta.svg" style="width:2em;vertical-align:top">
+        <li><img src="img/beta.svg" style="width:2em;position:relative;top:-3ex;" alt="">
       </ul>
       <ul>
         <li><a href="decode.html">Decode PSSH</a></li> |
-        <li><img src="img/anvil.svg" style="width:1em"> <a href="generate.html">Generate Widevine PSSH</a></li>
+        <li><img src="img/anvil.svg" style="width:1em" alt=""> <a href="generate.html">Generate Widevine PSSH</a></li>
       </ul>
     </nav>
      <form>
@@ -40,7 +41,10 @@
     <div id="output" style="margin-top:2em;padding:1em"></div>
 
     <p style="margin-top:2em">This tool fetches an initialization segment from a web server (an MP4
-    fragment), extracts any DRM initialization data (PSSH boxes) and decodes them. Here is a
+    fragment), extracts any DRM initialization data (PSSH boxes) and decodes and prints them. Please
+    note that the initialization segment is fetched using your own web browser.
+
+    <p>Here is a
     <a href="https://m.dtv.fi/dash/dasherh264v3/drm/a1/i.mp4">sample URL</a> for testing.
 
     <p><strong>Privacy</strong>: this tool is implemented in WebAssembly and runs locally in your
