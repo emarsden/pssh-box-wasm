@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PSSH box generator</title>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.0/pico.classless.amber.min.css"
+      integrity="sha512-eoG3B3AJGSRXIEn/4X2/QrbAXRM1Bp+JNA4QKVdLAwno9AOv56TZo07rojZK4NHiMigWAMFM2YkZv986MsGwkg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="data:," />
+    <meta name="description" content="Generate a Widevine PSSH box directly in your browser (WASM)." />
+  </head>
+  <body>
+    <main>
+      <noscript>
+        <article style="backgroundColor:#F08080">
+          This site's functionality is implemented in WebAssembly, and requires Javascript.
+        </article>
+      </noscript>
+      <nav>
+        <ul>
+          <li><h1>PSSH box generator</h1></li>
+          <li><img src="img/beta.svg" style="width:2em">
+        </ul>
+        <ul>
+          <li><a href="decode.html">Decode PSSH</a></li> |
+          <li><a href="fetch-init.html">Fetch init segment</a></li>
+        </ul>
+      </nav>
+      <p>Note: all fields except for key ID can be left empty.</p>
+
+      <form>
+        <label data-tooltip="Key ID (32 hex characters)">Key ID
+          <input id="kid" type="text" minlength="32" maxlength="32"
+            pattern="[0-9ABCDEFabcdef]{32}" /></label>
+        <label>Content provider name <input id="provider" type="text"/></label>
+        <label>Content ID <input id="contentid" type="text"/></label>
+        <label>Policy <input id="policy" type="text"/></label>
+        <label>Crypto period index, for media using key rotation (an uint32)
+          <input id="crypto_period_index" type="number"/></label>
+        <fieldset>
+          <legend>Protection scheme</legend>
+          <label><input type="radio" name="protection_scheme" value="cenc" checked/>cenc (AES-CTR)</label>
+          <label><input type="radio" name="protection_scheme" value="cbc1"/>cbc1 (AES-CBC)</label>
+          <label><input type="radio" name="protection_scheme" value="cens"/>cens (AES-CTR subsample)</label>
+          <label><input type="radio" name="protection_scheme" value="cbcs"/>cbcs (AES-CBC subsample)</label>
+        </fieldset>
+        <button id="go" data-tooltip="Generate PSSH">Generate</button>
+      </form>
+
+      <div style="margin-top:2em;padding:1em" id="output"></div>
+
+      <p style="margin-top:2em">This tool generates a Widevine PSSH box and encodes it in Base 64 format.</p>
+
+      <p><strong>Privacy</strong>: this tool is implemented in
+      <a href="https://webassembly.org/">WebAssembly</a> (WASM) and runs fully inside your web
+      browser (there is no server backend).
+
+    </main>
+    <hr>
+    <footer style="font-size:small;display:flex;justify-content:space-between">
+    <span>Version: <span id="version"></span></span>
+    <span><img src="img/github.svg" style="width:2em;vertical-align:bottom">
+      <a href="https://github.com/emarsden/pssh-box-wasm/">GitHub repository</a></span>
+    <span>WebAssembly <img src="img/webassembly.svg" style="width:2em;vertical-align:bottom"> made with Rust
+      <img src="img/rustacean.svg" style="width:2em;vertical-align:bottom"></span>
+    </footer>
+
+    <script type="module" src="js/generate-pssh.js"></script>
+   </body>
+</html>
