@@ -10,6 +10,7 @@
       crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="data:," />
     <meta name="description" content="WASM tools to decode, generate and fetch PSSH boxes in your browser." />
+    <meta name="author" content="Eric Marsden">
     <style>
     body {
       font-size:16px;
@@ -36,6 +37,10 @@
          <article><a href="generate.html">Generate a Widevine PSSH</a></article>
          <article><a href="fetch-init.html">Fetch an initialization segment and decode any PSSH data</a></article>
       </div>
+
+      <p>These tools are all implemented in WebAssembly and run directly in your browser. There is
+         no server backend; the tools will run offline if you've loaded the page. All the content is
+         hosted on <a href="https://pages.github.com/">GitHub pages</a>.
     </main>
     <hr>
     <footer style="font-size:small;display:flex;justify-content:space-between">
