@@ -15,6 +15,9 @@ PSSH boxes are used:
 
 - in a `<cenc:pssh>` element in a DASH MPD manifest
 
+- in an `EXT-X-SESSION-KEY` field of an m3u8 playlist
+
+
 A PSSH box includes information for a single DRM system. This library supports the PSSH data formats
 for the following DRM systems:
 

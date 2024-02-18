@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet"
+       href="https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.3/pico.classless.amber.min.css"
+       integrity="sha512-YB08WWnuKue7dhY2B4brKA30xfkpCHLSPR/KyjSNOzA8hPYaizvjjhdrvnU3h6dg04xRNCdhgcsfUXTeLAlA7Q=="
+       crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="data:," />
+    <link rel="canonical" href="{{ current_url}} " />
+{% if page -%}
+   {% if page.title -%}
+   <title>{{ page.title }}</title>
+   {% else -%}
+   <title>PSSH Box tools</title>
+   {% endif -%}
+   {% if page.description -%}
+    <meta name="description" content="{{ page.description }}" />
+   {% endif -%}
+{% endif %}
+    <meta name="author" content="Eric Marsden">
+    <!-- GitHub pages set a very short 600 second expiry time in their cache-control header, which
+    we can't override. We attempt to tell the browser that the content can be cached longer, even if
+    in principle an HTTP header overrides an HTML meta tag. -->
+    <meta http-equiv="cache-control" content="max-age=3600">
+    <style>
+    body {
+      font-size:16px;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <noscript>
+        <article style="background-color:#F08080;margin:2em">
+          <img src="{{ config.base_url }}img/error.svg" style="width:1em" alt="">
+          This site’s functionality is implemented in WebAssembly, and requires Javascript.
+        </article>
+      </noscript>
+      <nav>
+        <ul>
+        {% if page %}
+          <li><h1>{{ page.title }}</h1></li>
+        {% else %}
+          <li><h1>PSSH box tools</h1></li>
+        {% endif %}
+          <li><img src="{{ config.base_url }}img/beta.svg" style="width:2em;position:relative;top:-2.4ex;" alt="">
+        </ul>
+      <ul>
+        {% if current_path != "/decode/" %}
+        <li><a href="../decode/">Decode PSSH</a></li> |
+        {% endif %}
+        {% if current_path != "/generate/" %}
+        <li><img src="{{ config.base_url}}img/anvil.svg" style="width:1em" alt="">
+         <a href="../generate/">Generate Widevine PSSH</a></li> |
+        {% endif %}
+        {% if current_path != "/fetch-init/" %}
+        <li><a href="../fetch-init/">Fetch init segment</a></li>
+        {% endif %}
+      </ul>
+      </nav>
+
+      {% block content %} {% endblock %}
+    </main>
+
+    <hr>
+    <footer style="font-size:small;display:flex;justify-content:space-between">
+    <span>Version: <span id="version"></span></span>
+    <span><img src="{{ config.base_url }}img/github.svg" style="width:1.2em;vertical-align:bottom" alt=""
+        loading="lazy" decoding="async">&nbsp;<a href="https://github.com/emarsden/pssh-box-wasm/">GitHub repository</a></span>
+    <span>WebAssembly <img src="{{ config.base_url }}img/webassembly.svg" style="width:1.2em;vertical-align:bottom"
+       alt="" loading="lazy" decoding="async"> made with Rust
+      <img src="{{ config.base_url }}img/rustacean.svg" style="width:1.5em"
+           alt="" loading="lazy" decoding="async"></span>
+    </footer>
+
+    {% block bodyjs %}{% endblock %}
+   </body>
+</html>

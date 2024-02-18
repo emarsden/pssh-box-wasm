@@ -33,12 +33,16 @@ jobs:
         with:
            version: 'latest'
 
+      - uses: taiki-e/install-action@v2
+        with:
+           tool: zola
+
       - name: Build bundle
         run: |
            rm -rf dist/
-           wasm-pack build --release --target web
            mkdir dist
-           cp -r html/* dist
+           zola build --output-dir dist
+           wasm-pack build --release --target web
            # The generated WebAssembly
            cp -r pkg dist
            find dist -type d -print0 | xargs -0 chmod 755
