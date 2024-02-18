@@ -41,7 +41,7 @@ jobs:
         run: |
            rm -rf dist/
            mkdir dist
-           zola build --output-dir dist
+           (cd www-zola && zola build --output-dir ../dist)
            wasm-pack build --release --target web
            # The generated WebAssembly
            cp -r pkg dist
