@@ -40,7 +40,6 @@ jobs:
       - name: Build bundle
         run: |
            rm -rf dist/
-           mkdir dist
            (cd www-zola && zola build --output-dir ../dist)
            wasm-pack build --release --target web
            # The generated WebAssembly
