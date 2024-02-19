@@ -17,7 +17,7 @@ document.getElementById("go").addEventListener("click", function(e) {
         out.innerHTML = "<strong>Decoded</strong><br>" + decoded;
         out.style.backgroundColor = "#CCC";
     } catch (e) {
-        out.innerHTML = "<img src='img/error.svg' style='width:1em'>&nbsp;" + 
+        out.innerHTML = "<img src='../img/error.svg' style='width:1em'>&nbsp;" + 
             e.toString()
             .replace("Error:", "<strong>Error</strong>:")
             .replace("\n", "<br>");
