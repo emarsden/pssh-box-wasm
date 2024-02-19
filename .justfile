@@ -3,16 +3,14 @@
 default:
    @just --list
 
-wasm-pack:
+build:
    wasm-pack build --release --target web
 
-
-wasm2:
+wasm:
    cargo build --target wasm32-unknown-unknown 
 
-
 serve:
-   cd html && python3 -m http.server
+   cd www-zola && zola serve
 
 
 # for use with twiggy ("cargo install twiggy")

@@ -14,11 +14,13 @@ description = "Fetch PSSH data from a DASH initialization segment."
    <small>The URL of the initialization segment to fetch</small>
 </form>
 
-<div id="output" style="margin-top:2em;margin-bottom:2em;padding:1em"></div>
+<div id="output" style="margin-top:2em;margin-bottom:1.5em;padding:1em"></div>
 
 This tool fetches an initialization segment from a web server (an MP4 fragment), extracts any DRM
 initialization data (PSSH boxes) and decodes and prints them. Please note that the initialization
-segment is fetched using your own web browser.
+segment is fetched using your own web browser. Due to browser restrictions on “<a
+href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content">mixed content</a>”, this
+tool will probably only work with HTTPS URLs and fail with HTTP URLs.
 
 Some sample URLs for testing: [init1.mp4](https://m.dtv.fi/dash/dasherh264v3/drm/a1/i.mp4),
 [init2.mp4](https://s71135.cdn.mytvnet.vn/pkg20/__cl/vstv341/sc-gaFECw/V2_init.mp4).

@@ -7,8 +7,11 @@
        href="https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.3/pico.classless.amber.min.css"
        integrity="sha512-YB08WWnuKue7dhY2B4brKA30xfkpCHLSPR/KyjSNOzA8hPYaizvjjhdrvnU3h6dg04xRNCdhgcsfUXTeLAlA7Q=="
        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {#
     <link rel="icon" href="data:," />
-    <link rel="canonical" href="{{ current_url}} " />
+    #}
+    <link rel="icon" href="../img/pssh-box-logo.svg">
+    <link rel="canonical" href="{{ current_url}}" />
 {% if page -%}
    {% if page.title -%}
    <title>{{ page.title }}</title>
@@ -41,7 +44,7 @@
       <nav>
         <ul>
         {% if page %}
-          <li><h1>{{ page.title }}</h1></li>
+          <li><h1><img src="{{ config.base_url }}img/pssh-box-logo.svg" style="width:1em" alt="">&nbsp;{{ page.title }}</h1></li>
         {% else %}
           <li><h1>PSSH box tools</h1></li>
         {% endif %}

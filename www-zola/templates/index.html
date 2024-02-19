@@ -2,9 +2,27 @@
 
 {% block content %}
 <div class="grid">
-   <article><a href="decode/">Decode a PSSH box</a></article>
-   <article><a href="generate/">Generate a Widevine PSSH</a></article>
-   <article><a href="fetch-init/">Fetch an initialization segment and decode any PSSH data</a></article>
+   <article>
+     <h3><a href="decode/">Decode a PSSH box</a></h3>
+
+     <p>This tool decodes a PSSH box or sequence of PSSH boxes that are used to initialize DRM systems
+     for streaming media. You will typically find a PSSH box in a <tt>&lt;cenc:pssh&gt;</tt> element in a
+     DASH MPD manifest, or in the initialization segment of a media stream (an fMP4 fragment), or 
+     in an <tt>EXT-X-SESSION-KEY</tt> field of an m3u8 playlist.
+   </article>
+
+   <article>
+     <h3><a href="generate/">Generate a Widevine PSSH</a></h3>
+
+     <p>This tool generates a Widevine PSSH box and encodes it in Base 64 format.
+   </article>
+
+   <article>
+     <h3><a href="fetch-init/">Fetch an initialization segment</a></h3>
+
+     <p>This tool fetches an initialization segment from a web server (an MP4 fragment), extracts
+     any DRM initialization data (PSSH boxes) and decodes and prints them. 
+   </article>
 </div>
 
 <p>These tools are all implemented in WebAssembly and run directly in your browser. There is no
