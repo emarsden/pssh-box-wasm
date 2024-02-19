@@ -20,7 +20,8 @@ This tool fetches an initialization segment from a web server (an MP4 fragment),
 initialization data (PSSH boxes) and decodes and prints them. Please note that the initialization
 segment is fetched using your own web browser.
 
-Here is a <a href="https://m.dtv.fi/dash/dasherh264v3/drm/a1/i.mp4">sample URL</a> for testing.
+Some sample URLs for testing: [init1.mp4](https://m.dtv.fi/dash/dasherh264v3/drm/a1/i.mp4),
+[init2.mp4](https://s71135.cdn.mytvnet.vn/pkg20/__cl/vstv341/sc-gaFECw/V2_init.mp4).
 
 **Privacy**: this tool is implemented in WebAssembly and runs locally in your web browser. Once
 loaded, it will run fully offline.
