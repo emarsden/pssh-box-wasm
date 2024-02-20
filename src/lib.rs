@@ -4,6 +4,7 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, Response};
+use url::Url;
 use html_escape::encode_text;
 use pssh_box::{from_base64, from_hex, from_buffer, find_iter};
 use pssh_box::{PsshBox, PsshBoxVec, DRMKeyId, PsshData};
@@ -99,6 +100,9 @@ pub fn generate_widevine_pssh_b64(
 {
     console_error_panic_hook::set_once();
 
+    if hex::decode(content_id).is_err() {
+        return Err(PsshBoxWasmError::Parsing(String::from("content_id not in hexademical format")).into());
+    }
     let mut pssh = PsshBox::new_widevine();
     let kids: Vec<String> = serde_wasm_bindgen::from_value(kids_jsval)?;
     for kid_string in kids {
@@ -106,7 +110,6 @@ pub fn generate_widevine_pssh_b64(
             .map_err(|_| PsshBoxWasmError::InvalidKeyId(format!("{kid_string:?}")))?;
         pssh.add_key_id(kid);
     }
-    // TODO check that content_id has valid hex encoding
     if let PsshData::Widevine(ref mut pd) = pssh.pssh_data {
         pd.provider = Some(String::from(provider));
         pd.policy = Some(String::from(policy));
@@ -118,6 +121,16 @@ pub fn generate_widevine_pssh_b64(
 
 #[wasm_bindgen]
 pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
+    match Url::parse(url) {
+        Ok(u) => {
+            if u.scheme() != "https" {
+                return Err(PsshBoxWasmError::Parsing(String::from("URL must be HTTPS")).into());
+            }
+        },
+        Err(e) => {
+            return Err(PsshBoxWasmError::Parsing(format!("invalid URL: {e:?}")).into());
+        },
+    }
     let mut opts = RequestInit::new();
     opts.method("GET");
     let request = Request::new_with_str_and_init(&url, &opts)

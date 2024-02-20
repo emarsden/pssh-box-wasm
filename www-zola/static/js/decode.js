@@ -7,8 +7,8 @@ document.getElementById("go").addEventListener("click", function(e) {
     e.preventDefault();
     let input = document.getElementById("pssh").value.trim();
     let out = document.getElementById("output");
-    let decoded;
     try {
+        let decoded;
         if (document.getElementById("fmt_base64").checked) {
             decoded = pssh_base64_to_html(input);
         } else {

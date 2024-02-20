@@ -48,15 +48,15 @@
         {% else %}
           <li><h1>PSSH box tools</h1></li>
         {% endif %}
-          <li><img src="{{ config.base_url }}img/beta.svg" style="width:2em;position:relative;top:-2.4ex;" alt="">
+          <li><img src="{{ config.base_url }}img/beta.svg" style="width:2em;position:relative;top:-2.4ex;" alt=""></li>
         </ul>
       <ul>
         {% if current_path != "/decode/" %}
-        <li><a href="../decode/">Decode PSSH</a></li> |
+        <li><a href="../decode/">Decode PSSH</a> |</li>
         {% endif %}
         {% if current_path != "/generate/" %}
         <li><img src="{{ config.base_url}}img/anvil.svg" style="width:1em" alt="">
-         <a href="../generate/">Generate Widevine PSSH</a></li> |
+         <a href="../generate/">Generate Widevine PSSH</a> |</li>
         {% endif %}
         {% if current_path != "/fetch-init/" %}
         <li><a href="../fetch-init/">Fetch init segment</a></li>
