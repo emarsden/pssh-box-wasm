@@ -7,7 +7,7 @@ use web_sys::{Request, RequestInit, Response};
 use url::Url;
 use html_escape::encode_text;
 use pssh_box::{from_base64, from_hex, from_buffer, find_iter};
-use pssh_box::{PsshBox, PsshBoxVec, DRMKeyId, PsshData};
+use pssh_box::{PsshBox, PsshBoxVec, DRMKeyId, PsshData, ToBytes};
 
 
 #[derive(thiserror::Error, Debug)]
@@ -105,7 +105,7 @@ pub fn generate_widevine_pssh_b64(
     }
     let mut pssh = PsshBox::new_widevine();
     let kids: Vec<String> = serde_wasm_bindgen::from_value(kids_jsval)?;
-    for kid_string in kids {
+    for kid_string in &kids {
         let kid = DRMKeyId::try_from(&kid_string as &str)
             .map_err(|_| PsshBoxWasmError::InvalidKeyId(format!("{kid_string:?}")))?;
         pssh.add_key_id(kid);
@@ -119,6 +119,13 @@ pub fn generate_widevine_pssh_b64(
         }
         if !content_id.is_empty() {
             pd.content_id = Some(content_id.into());
+        }
+        // We include the key ids twice, in case some consumers only look at the PSSH data for them
+        // and ignore the box header.
+        for kid_string in &kids {
+            let kid = DRMKeyId::try_from(&kid_string as &str)
+                .map_err(|_| PsshBoxWasmError::InvalidKeyId(format!("{kid_string:?}")))?;
+            pd.key_id.push(kid.to_bytes());
         }
     }
     Ok(pssh.to_base64())
