@@ -8,8 +8,8 @@ Note: all fields except for key ID can be left empty.
 
 <form>
   <label data-tooltip="Key ID (32 hex characters)">Key ID
-    <input id="kid" type="text" minlength="32" maxlength="32"
-      pattern="[0-9ABCDEFabcdef]{32}" /></label>
+    <input id="kid" type="text" minlength="32" maxlength="36"
+      pattern="[0-9ABCDEFabcdef]{8}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{12}" /></label>
   <label>Content provider name <input id="provider" type="text"/></label>
   <label>Content ID <input id="contentid" type="text"/></label>
   <label>Policy <input id="policy" type="text"/></label>
@@ -25,13 +25,13 @@ Note: all fields except for key ID can be left empty.
   <button id="go" data-tooltip="Generate PSSH">Generate</button>
 </form>
 
-<div style="margin-top:2em;margin-bottom:2em;padding:1em" id="output"></div>
+<div style="margin-top:1.5em;margin-bottom:1.5em;padding:1em" id="output"></div>
 
-This tool generates a Widevine PSSH box and encodes it in Base 64 format.
+Given a Key ID, this tool generates a Widevine PSSH box and encodes it in Base 64 format.
 
 **Privacy**: this tool is implemented in [WebAssembly](https://webassembly.org/) (WASM)
 and runs fully inside your web browser (there is no server backend).
 
 
 
-<script type="module" src="../js/generate.js"></script>
+<script type="module" src="../js/generate-pssh.js"></script>
