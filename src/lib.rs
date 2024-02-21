@@ -101,7 +101,7 @@ pub fn generate_widevine_pssh_b64(
     console_error_panic_hook::set_once();
 
     if hex::decode(content_id).is_err() {
-        return Err(PsshBoxWasmError::Parsing(String::from("content_id not in hexademical format")).into());
+        return Err(PsshBoxWasmError::InvalidHex(String::from("content_id")).into());
     }
     let mut pssh = PsshBox::new_widevine();
     let kids: Vec<String> = serde_wasm_bindgen::from_value(kids_jsval)?;
