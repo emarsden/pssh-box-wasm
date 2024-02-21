@@ -111,9 +111,15 @@ pub fn generate_widevine_pssh_b64(
         pssh.add_key_id(kid);
     }
     if let PsshData::Widevine(ref mut pd) = pssh.pssh_data {
-        pd.provider = Some(String::from(provider));
-        pd.policy = Some(String::from(policy));
-        pd.content_id = Some(content_id.into());
+        if !provider.is_empty() {
+            pd.provider = Some(String::from(provider));
+        }
+        if !policy.is_empty() {
+            pd.policy = Some(String::from(policy));
+        }
+        if !content_id.is_empty() {
+            pd.content_id = Some(content_id.into());
+        }
     }
     Ok(pssh.to_base64())
 }
@@ -133,7 +139,7 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
     }
     let mut opts = RequestInit::new();
     opts.method("GET");
-    let request = Request::new_with_str_and_init(&url, &opts)
+    let request = Request::new_with_str_and_init(url, &opts)
         .or(Err(PsshBoxWasmError::WebSys(String::from("creating Request"))))?;
     request
         .headers()
