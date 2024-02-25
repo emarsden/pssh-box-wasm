@@ -1,4 +1,4 @@
-//! lib.rs -- WASM code for parsing/printing PSSH box
+//! lib.rs -- WASM code for parsing/printing PSSH boxes
 
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
@@ -8,6 +8,7 @@ use url::Url;
 use html_escape::encode_text;
 use pssh_box::{from_base64, from_hex, from_buffer, find_iter};
 use pssh_box::{PsshBox, PsshBoxVec, DRMKeyId, PsshData, ToBytes};
+use pssh_box::widevine::widevine_pssh_data::ProtectionScheme;
 
 
 #[derive(thiserror::Error, Debug)]
@@ -32,7 +33,9 @@ pub enum PsshBoxWasmError {
 
 #[wasm_bindgen]
 pub fn code_version() -> String {
+    wasm_log::init(wasm_log::Config::default());
     console_error_panic_hook::set_once();
+
     String::from(pssh_box::version())
 }
 
@@ -91,19 +94,26 @@ pub fn pssh_base64_to_html(b64: &str) -> Result<String, JsError> {
 }
 
 
+// TODO: should probably define a struct to hold all these arguments, or use WidevinePsshData
+// directly from javascript.
 #[wasm_bindgen]
 pub fn generate_widevine_pssh_b64(
+    version: u8,
     kids_jsval: JsValue, // array of strings
     provider: &str,
     content_id: &str,
-    policy: &str) -> Result<String, JsError>
+    policy: &str,
+    crypto_period_index: Option<u32>,
+    protection_scheme: &str,
+    algorithm: Option<i32>) -> Result<String, JsError>
 {
     console_error_panic_hook::set_once();
 
-    if hex::decode(content_id).is_err() {
-        return Err(PsshBoxWasmError::InvalidHex(String::from("content_id")).into());
-    }
     let mut pssh = PsshBox::new_widevine();
+    if version > 1 {
+        return Err(PsshBoxWasmError::Other(String::from("version must be 0 or 1")).into());
+    }
+    pssh.version = version;
     let kids: Vec<String> = serde_wasm_bindgen::from_value(kids_jsval)?;
     for kid_string in &kids {
         let kid = DRMKeyId::try_from(&kid_string as &str)
@@ -114,11 +124,28 @@ pub fn generate_widevine_pssh_b64(
         if !provider.is_empty() {
             pd.provider = Some(String::from(provider));
         }
+        if !content_id.is_empty() {
+            if let Ok(ci) = hex::decode(content_id) {
+                pd.content_id = Some(ci);
+            } else {
+                return Err(PsshBoxWasmError::InvalidHex(String::from("content_id")).into());
+            }
+        }
         if !policy.is_empty() {
             pd.policy = Some(String::from(policy));
         }
-        if !content_id.is_empty() {
-            pd.content_id = Some(content_id.into());
+        if let Some(cpi) = crypto_period_index {
+            pd.crypto_period_index = Some(cpi);
+        }
+        if !protection_scheme.is_empty() {
+            if let Some(ps) = ProtectionScheme::from_str_name(protection_scheme) {
+                pd.protection_scheme = Some(ps.into());
+            } else {
+                return Err(PsshBoxWasmError::Other(String::from("invalid protection_scheme")).into());
+            }
+        }
+        if let Some(alg) = algorithm {
+            pd.algorithm = Some(alg);
         }
         // We include the key ids twice, in case some consumers only look at the PSSH data for them
         // and ignore the box header.
