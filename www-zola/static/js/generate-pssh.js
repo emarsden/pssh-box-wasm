@@ -5,15 +5,35 @@ init().then(() => {
 
 document.getElementById("go").addEventListener("click", function(e) {
     e.preventDefault();
-    let kid = document.getElementById("kid").value.trim();
-    let provider = document.getElementById("provider").value.trim();
-    let contentid = document.getElementById("contentid").value.trim();
-    let policy = document.getElementById("policy").value.trim();
-    let crypto_period_index = document.getElementById("crypto_period_index").value.trim();
-    let protection_scheme = document.querySelector("input[name='protection_scheme']:checked").value;
+    const kid = document.getElementById("kid").value.trim();
+    const version_str = document.querySelector("input[name='version']:checked").value;
+    const provider = document.getElementById("provider").value.trim();
+    const contentid = document.getElementById("contentid").value.trim();
+    const policy = document.getElementById("policy").value.trim();
+    const crypto_period_idx_str = document.getElementById("crypto_period_index").value.trim();
+    var protection_scheme = document.querySelector("input[name='protection_scheme']:checked").value;
+    const algorithm_str = document.querySelector("input[name='algorithm']:checked").value;
     let out = document.getElementById("output");
     try {
-        let encoded = generate_widevine_pssh_b64([kid], provider, contentid, policy);
+        let version = 0;
+        if (version_str === "1") {
+            version = 1;
+        }
+        let cpi = null;  // maps to None in Rust
+        if (crypto_period_idx_str.length > 0) {
+            cpi = Number(crypto_period_idx_str);
+        }
+        if (protection_scheme === "unspecified") {
+            protection_scheme = "";
+        }
+        let algorithm = null;
+        if (algorithm_str === "0") {
+            algorithm = 0;
+        } else if (algorithm_str === "1") {
+            algorithm = 1;
+        }
+        let encoded = generate_widevine_pssh_b64(version, [kid], provider, contentid, policy,
+                                                 cpi, protection_scheme, algorithm);
         out.innerHTML = "<h3>Generated PSSH in Base 64</h3>" + "<p>" + encoded;
         out.style.backgroundColor = "#CCC";
     } catch (e) {
@@ -38,7 +58,7 @@ function initValidation(form) {
     
     const fields = Array.from(form.elements);
     fields.forEach(field => {
-        if (!(field.type == "radio")) {
+        if (field.pattern && !(field.type == "radio")) {
             field.setAttribute("aria-invalid", false);
             const helpBox = document.createElement("small");
             const helpId = field.id + "Helper";
