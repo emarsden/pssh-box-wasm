@@ -12,11 +12,11 @@ wasm:
 serve:
     #!/usr/bin/env bash
     DIST=`mktemp -d /tmp/pssh-box-wasmXXXXX`
-    (cd www-zola && zola build --output-dir $DIST --force)
+    cp -r www-zola/* $DIST
     wasm-pack build --release --target web
-    cp -r pkg $DIST
+    cp -r pkg $DIST/static
     echo serving from $DIST
-    (cd $DIST && python3 -m http.server)
+    (cd $DIST && zola serve)
 
 
 # for use with twiggy ("cargo install twiggy")
