@@ -39,7 +39,7 @@ following <abbr title="Digital Rights Management">DRM</abbr> systems:
 - <a href="https://irdeto.com/video-entertainment/multi-drm/">Irdeto</a>
 - <a href="https://www.marlin-community.com/">Marlin</a>
 - <a href="https://developer.huawei.com/consumer/en/hms/huawei-wiseplay/">WisePlay</a>, owned by Huawei
-- The unofficial variant of Apple Fairplay that is used for DASH-like streaming by Netflix
+- The unofficial variant of Apple FairPlay that is used for DASH-like streaming by Netflix
 - Common Encryption (CENC)
 
 

@@ -121,9 +121,11 @@ pub fn generate_widevine_pssh_b64(
         pssh.add_key_id(kid);
     }
     if let PsshData::Widevine(ref mut pd) = pssh.pssh_data {
+        let provider = provider.trim();
         if !provider.is_empty() {
             pd.provider = Some(String::from(provider));
         }
+        let content_id = content_id.trim();
         if !content_id.is_empty() {
             if let Ok(ci) = hex::decode(content_id) {
                 pd.content_id = Some(ci);
@@ -131,12 +133,14 @@ pub fn generate_widevine_pssh_b64(
                 return Err(PsshBoxWasmError::InvalidHex(String::from("content_id")).into());
             }
         }
+        let policy = policy.trim();
         if !policy.is_empty() {
             pd.policy = Some(String::from(policy));
         }
         if let Some(cpi) = crypto_period_index {
             pd.crypto_period_index = Some(cpi);
         }
+        let protection_scheme = protection_scheme.trim();
         if !protection_scheme.is_empty() {
             if let Some(ps) = ProtectionScheme::from_str_name(protection_scheme) {
                 pd.protection_scheme = Some(ps.into());
