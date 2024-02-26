@@ -42,5 +42,6 @@ footer {
     content: url("../img/ornament.svg");
     display: inline-block;
     width: 40%;
+    max-width: 500px;
     margin-left: 20%;
 }
