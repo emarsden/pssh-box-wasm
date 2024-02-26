@@ -29,3 +29,18 @@ footer {
     position: relative;
     top: 1ex;
 }
+
+
+.flourish {
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 0.5;
+}
+
+.flourish::before {
+    content: url("../img/ornament.svg");
+    display: inline-block;
+    width: 40%;
+    margin-left: 20%;
+}

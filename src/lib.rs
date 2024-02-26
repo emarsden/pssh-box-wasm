@@ -71,6 +71,7 @@ fn psshboxes_to_html(boxes: &PsshBoxVec) -> String {
         out += &format!("  <tr><td title='{}'>PSSH data</td><td>{html}</td><tr>",
                         "Data that is specific to this DRM system");
         out += &String::from("</table>");
+        out += &String::from("<div class='flourish'></div>");
     }
     out
 }
