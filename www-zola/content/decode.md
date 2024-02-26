@@ -17,13 +17,12 @@ description = "Decode a DRM PSSH box directly in your browser (WASM)."
   <button id="go" data-tooltip="Decode PSSH">Decode</button>
 </form>
 
-<div style="margin-top:2em;padding:1em" id="output"></div>
+<article id="output" class="output"></article>
 
-<p style="margin-top:2em">This tool decodes a <abbr title="Protection System Specific
-Header">PSSH</abbr> box or sequence of <abbr title="Protection System Specific
-Header">PSSH</abbr> boxes that are used to initialize <abbr title="Digital Rights
-Management">DRM</abbr> systems for streaming media. You will typically find a
-<abbr title="Protection System Specific Header">PSSH</abbr> box:
+<p>This tool decodes a <abbr title="Protection System Specific Header">PSSH</abbr> box or sequence
+of <abbr title="Protection System Specific Header">PSSH</abbr> boxes that are used to initialize
+<abbr title="Digital Rights Management">DRM</abbr> systems for streaming media. You will typically
+find a <abbr title="Protection System Specific Header">PSSH</abbr> box:
 
 - inside a `<cenc:pssh>` element in a DASH MPD manifest;
 - within a `pssh` box in the initialization segment of a media stream (an fMP4 fragment);

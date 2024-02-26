@@ -14,7 +14,7 @@ description = "Fetch PSSH data from a DASH initialization segment."
    <small>The URL of the initialization segment to fetch</small>
 </form>
 
-<div id="output" style="margin-top:2em;margin-bottom:1.5em;padding:1em"></div>
+<article id="output" class="output"></article>
 
 This tool fetches an initialization segment from a web server (an MP4 fragment), extracts any DRM
 initialization data (PSSH boxes) and decodes and prints them. Please note that the initialization

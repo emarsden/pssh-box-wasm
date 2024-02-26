@@ -7,6 +7,8 @@ document.getElementById("go").addEventListener("click", function(e) {
     e.preventDefault();
     let input = document.getElementById("pssh").value.trim();
     let out = document.getElementById("output");
+    out.style.visibility = "visible";
+    out.scrollIntoView();
     try {
         let decoded;
         if (document.getElementById("fmt_base64").checked) {
@@ -15,12 +17,10 @@ document.getElementById("go").addEventListener("click", function(e) {
             decoded = pssh_hex_to_html(input);
         }
         out.innerHTML = "<strong>Decoded</strong><br>" + decoded;
-        out.style.backgroundColor = "#CCC";
     } catch (e) {
-        out.innerHTML = "<img src='../img/error.svg' style='width:1em'>&nbsp;" + 
-            e.toString()
+        out.innerHTML = e.toString()
             .replace("Error:", "<strong>Error</strong>:")
             .replace("\n", "<br>");
-        out.style.backgroundColor = "rgba(255, 10, 10, 0.2)";
+        out.classList.add("failed");
     }
 });

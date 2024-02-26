@@ -6,19 +6,19 @@ init().then(() => {
 document.getElementById("go").addEventListener("click", function(e) {
     e.preventDefault();
     e.target.style.cursor = "wait";
-    let out = document.getElementById("output");
     let url = document.getElementById("url").value.trim();
+    let out = document.getElementById("output");
+    out.style.visibility = "visible";
+    out.scrollIntoView();
     fetch_pssh_data(url)
         .then((html) => {
             out.innerHTML = "<strong>PSSH data</strong><br>" + html;
-            out.style.backgroundColor = "#CCC";
         })
         .catch((e) => {
-            out.innerHTML = "<img src='../img/error.svg' style='width:1em'>&nbsp;" +
-                e.toString()
+            out.innerHTML = e.toString()
                 .replace("Error:", "<strong>Error</strong>:")
                 .replace("\n", "<br>");
-            out.style.backgroundColor = "rgba(250, 10, 10, 0.2)";
+            out.classList.add("failed");
         });
     e.target.style.cursor = "auto";
 });

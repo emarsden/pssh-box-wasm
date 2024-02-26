@@ -66,7 +66,7 @@ in Base 64 format.
   <button id="go" data-tooltip="Generate PSSH">Generate</button>
 </form>
 
-<div style="margin-top:1.5em;margin-bottom:1.5em;padding:1em" id="output"></div>
+<article id="output" class="output"></article>
 
 **Privacy**: this tool is implemented in [WebAssembly](https://webassembly.org/) (WASM)
 and runs fully inside your web browser (there is no server backend).

@@ -14,6 +14,8 @@ document.getElementById("go").addEventListener("click", function(e) {
     var protection_scheme = document.querySelector("input[name='protection_scheme']:checked").value;
     const algorithm_str = document.querySelector("input[name='algorithm']:checked").value;
     let out = document.getElementById("output");
+    out.style.visibility = "visible";
+    out.scrollIntoView();
     try {
         let version = 0;
         if (version_str === "1") {
@@ -35,13 +37,11 @@ document.getElementById("go").addEventListener("click", function(e) {
         let encoded = generate_widevine_pssh_b64(version, [kid], provider, contentid, policy,
                                                  cpi, protection_scheme, algorithm);
         out.innerHTML = "<h3>Generated PSSH in Base 64</h3>" + "<p>" + encoded;
-        out.style.backgroundColor = "#CCC";
     } catch (e) {
-        out.innerHTML = "<img src='../img/error.svg' style='width:1em'>&nbsp;" +
-            e.toString()
+        out.innerHTML = e.toString()
             .replace("Error:", "<strong>Error</strong>:")
             .replace("\n", "<br>");
-        out.style.backgroundColor = "rgba(255, 10, 10, 0.2)";
+        out.classList.add("failed");
     }
 });
 
