@@ -42,8 +42,10 @@ pub fn code_version() -> String {
 fn psshboxes_to_html(boxes: &PsshBoxVec) -> String {
     let mut out = String::from("");
     for pssh in boxes.iter() {
-        out += "<table>";
-        out += &format!("  <tr><td style='width:12em' id='boxversion'>PSSH Box version</td><td>{}</td></tr>\n",
+        out += "<table class='wrapping'>";
+        out += &format!("  <tr><td style='width:14em'>PSSH in Base64</td><td><tt style='font-size:60%'>{}</tt></td></tr>\n",
+                        pssh.clone().to_base64());
+        out += &format!("  <tr><td id='boxversion'>PSSH Box version</td><td>{}</td></tr>\n",
                         pssh.version);
         let raw = pssh.system_id.to_string();
         out += &format!("  <tr><td id='systemid' title='{}'>SystemID</td><td>{}</td></tr>\n",
@@ -71,7 +73,7 @@ fn psshboxes_to_html(boxes: &PsshBoxVec) -> String {
         out += &format!("  <tr><td title='{}'>PSSH data</td><td>{html}</td><tr>",
                         "Data that is specific to this DRM system");
         out += &String::from("</table>");
-        out += &format!("<p>Condensed format: <small><tt>{}</tt></small></p>", encode_text(&pssh.to_string()));
+        out += &format!("<p>Condensed format: <tt style='font-size:60%'>{}</tt></p>", encode_text(&pssh.to_string()));
         out += &String::from("<div class='flourish'></div>");
     }
     out
