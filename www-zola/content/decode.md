@@ -42,5 +42,13 @@ following <abbr title="Digital Rights Management">DRM</abbr> systems:
 - Common Encryption (CENC)
 
 
+For Widevine initialization data, you can cross-check the output from this tool by comparing it with
+the output from the `pssh-box.py` script included with
+[shaka-packager](https://github.com/shaka-project/shaka-packager). If you have [Podman](http://podman.io/) or Docker
+installed, run the commandline script safely sandboxed in a container as follows:
+
+    podman run --rm docker.io/google/shaka-packager:latest pssh-box.py --from-base64 <the-pssh>
+
+
 <script type="module" src="../js/decode.js"></script>
 
