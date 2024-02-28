@@ -23,7 +23,7 @@ href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content">mixed
 tool will probably only work with HTTPS URLs and fail with HTTP URLs.
 
 Some sample URLs for testing: [init1.mp4](https://m.dtv.fi/dash/dasherh264v3/drm/a1/i.mp4),
-[init2.mp4](https://s71135.cdn.mytvnet.vn/pkg20/__cl/vstv341/sc-gaFECw/V2_init.mp4).
+[init2.mp4](https://bitmovin-a.akamaihd.net/content/art-of-motion_drm/video/180_250000/cenc_dash/init.mp4).
 
 **Privacy**: this tool is implemented in WebAssembly and runs locally in your web browser. Once
 loaded, it will run fully offline.
