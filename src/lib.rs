@@ -205,6 +205,9 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
     let segment = js_sys::Uint8Array::new(&segment_buf).to_vec();
     let positions: Vec<usize> = find_iter(&segment).collect();
     let mut html = String::new();
+    if positions.is_empty() {
+        html += "No PSSH initialization data found.";
+    }
     for pos in positions {
         let boxes = from_buffer(&segment[pos..])
             .map_err(|_| PsshBoxWasmError::Other(String::from("extracting PSSH data")))?;
