@@ -1,8 +1,14 @@
+html,body {
+    height: 100vh;
+}
+
 body {
     font-size:16px;
 }
 
-footer {
+body > footer {
+    position: sticky;
+    top: 100vh;
     font-size: small;
     display: flex;
     justify-content: space-between;
