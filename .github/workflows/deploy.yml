@@ -46,7 +46,6 @@ jobs:
            cp -r pkg dist
            find dist -type d -print0 | xargs -0 chmod 755
            find dist -type f -print0 | xargs -0 chmod 644
-
            # Build pyodide (Python compiled to WASM) alongside our required Python libraries
            # compiled to WASM (in particular those that include C code, such pycryptodome and
            # protobuf). We need to build the construct package v2.8.8 specially, because it's not
@@ -62,8 +61,10 @@ jobs:
            cd construct-2.8.8
            python3 setup.py bdist_wheel
            cp dist/construct-2.8.8-py2.py3-none-any.whl $PYODIDE_DIST
+           echo === Content of PYODIDE_DIST directory:
+           ls -l $PYODIDE_DIST
            cd $TMPSRC
-           echo Fetching pyodide repository
+           echo === Fetching pyodide repository
            git clone --quiet --depth 1 https://github.com/pyodide/pyodide.git
            cd pyodide
            # Build pyodide using emscripten, as per
@@ -88,6 +89,8 @@ jobs:
            cp pyodide.mjs $PYODIDE_DIST
            cp pyodide.mjs.map $PYODIDE_DIST
            cp python_stdlib.zip $PYODIDE_DIST
+           echo === Final content of PYODIDE_DIST directory
+           ls -l $PYODIDE_DIST
 
       - uses: actions/configure-pages@v4
 
