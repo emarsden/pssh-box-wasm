@@ -24,3 +24,18 @@ document.getElementById("go").addEventListener("click", function(e) {
         out.classList.add("failed");
     }
 });
+
+
+const pssh = document.getElementById("pssh");
+pssh.addEventListener("input", function (e) {
+    if (pssh.validity.patternMismatch) {
+        pssh.setAttribute("aria-invalid", true);
+        pssh.setCustomValidity("Invalid PSSH format");
+        document.getElementById("go").setAttribute("disabled", true);
+    } else {
+        pssh.setCustomValidity("");
+        pssh.setAttribute("aria-invalid", false);
+        document.getElementById("go").removeAttribute("disabled");
+    }
+});
+
