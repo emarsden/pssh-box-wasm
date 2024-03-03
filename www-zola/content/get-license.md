@@ -52,6 +52,6 @@ fully inside your web browser (there is no server backend; the tool will work fu
 uses the [Pywidevine library](https://github.com/devine-dl/pywidevine) compiled to WASM using
 the excellent [Pyodide](https://pyodide.org/) tool.
 
-<script defer src="{{ get_url(path='/pyodide/pyodide.js') }}"></script>
+<script defer src="../pyodide/pyodide.js"></script>
 <script type="module" src="../js/get-license.js"></script>
 
