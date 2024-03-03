@@ -51,7 +51,7 @@ jobs:
            # compiled to WASM (in particular those that include C code, such pycryptodome and
            # protobuf). We need to build the construct package v2.8.8 specially, because it's not
            # packaged as a wheel on pypi.
-           PYODIDE_DIST=dist/pyodide
+           PYODIDE_DIST=`pwd`/dist/pyodide
            mkdir -p $PYODIDE_DIST
            TMPSRC=`mktemp -d /tmp/pyodide-buildXXXX`
            # First build a whl for construct v2.8.8. It's required by the old version of pymp4 used
