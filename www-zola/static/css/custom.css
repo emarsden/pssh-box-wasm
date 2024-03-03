@@ -6,9 +6,19 @@ body {
     font-size:16px;
 }
 
+header > nav {
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--pico-primary-background) 20%, transparent);
+    margin-bottom: 5ex;
+    padding-left: 1em;
+}
+
 body > footer {
     position: sticky;
     top: 100vh;
+}
+
+footer {
     font-size: small;
     display: flex;
     justify-content: space-between;
@@ -20,6 +30,26 @@ body > footer {
     padding: 1em;
     border-style: dotted;
     visibility: hidden;
+}
+
+.output table {
+    font-size: 90%;
+}
+
+#cmdline {
+    font-size: 60%;
+}
+
+.pyodide_logs {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    visibility: hidden;
+}
+
+.log {
+    font-size: 60%;
+    word-wrap: break-word;
+    white-space: pre-wrap; 
 }
 
 .failed {
@@ -46,6 +76,10 @@ table.wrapping td {
     white-space: pre-wrap; 
 }
 
+#loading {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
 
 .flourish {
     display: block;
@@ -60,6 +94,7 @@ table.wrapping td {
     content: url("../img/ornament.svg");
     display: inline-block;
     width: 40%;
-    max-width: 500px;
+    max-width: 450px;
     margin-left: 20%;
 }
+

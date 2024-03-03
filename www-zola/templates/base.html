@@ -27,36 +27,33 @@
     <meta http-equiv="cache-control" content="max-age=3600">
   </head>
   <body>
-    <main>
+    <header>
+      {% if page %}
+      <nav aria-label="breadcrumb">
+       <ul>
+        <li><a href="{{ get_url(path='/') }}">PSSH box tools</a></li>
+        <li>{{ page.title }}</li>
+       </ul>
+      </nav>
+
+      <h1><img src="{{ get_url(path='img/pssh-box-logo.svg') }}" style="width:1em" alt="">&nbsp;
+      {{ page.title }}
+      &nbsp;<img src="{{ get_url(path='img/beta.svg') }}" style="width:1em;position:relative;top:-1.1ex;" alt="">
+      </h1>
+      {% else %}
+      <img src="{{ get_url(path='img/pssh-box-logo.svg') }}" style="width:1em" alt="">&nbsp;
+      <h1>PSSH box tools</h1>
+      {% endif %}
+
       <noscript>
         <article style="background-color:#F08080;margin:2em">
           <img src="{{ get_url(path='img/error.svg') }}" style="width:1em" alt="">
           This site’s functionality is implemented in WebAssembly, and requires Javascript.
         </article>
       </noscript>
-      <nav>
-        <ul>
-        {% if page %}
-          <li><h1><img src="{{ get_url(path='img/pssh-box-logo.svg') }}" style="width:1em" alt="">&nbsp;{{ page.title }}</h1></li>
-        {% else %}
-          <li><h1>PSSH box tools</h1></li>
-        {% endif %}
-          <li><img src="{{ get_url(path='img/beta.svg') }}" style="width:2em;position:relative;top:-2.4ex;" alt=""></li>
-        </ul>
-      <ul>
-        {% if current_path != "/decode/" %}
-        <li><a href="{{ get_url(path='decode', trailing_slash=true) }}">Decode PSSH</a> |</li>
-        {% endif %}
-        {% if current_path != "/generate/" %}
-        <li><img src="{{ get_url(path='img/anvil.svg') }}" style="width:1em" alt="">
-         <a href="{{ get_url(path='generate', trailing_slash=true) }}">Generate Widevine PSSH</a> |</li>
-        {% endif %}
-        {% if current_path != "/fetch-init/" %}
-        <li><a href="{{ get_url(path='fetch-init', trailing_slash=true) }}">Fetch init segment</a></li>
-        {% endif %}
-      </ul>
-      </nav>
+    </header>
 
+    <main>
       {% block content %} {% endblock %}
     </main>
 
