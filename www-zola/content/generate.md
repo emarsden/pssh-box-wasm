@@ -12,8 +12,8 @@ in Base 64 format.
     <header><h3>Mandatory field</h3></header>
       <label data-tooltip="Key ID (32 hex characters)">Key ID or KID (required argument)
         <input id="kid" type="text" minlength="32" maxlength="36"
-        pattern="[0-9ABCDEFabcdef]{8}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{12}"
-  />
+        pattern="[0-9ABCDEFabcdef]{8}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{12}" 
+        required />
       </label>
   </article>
 
@@ -33,15 +33,20 @@ in Base 64 format.
   <small>v0 PSSH boxes are more widely supported by Widevine license servers</small>
   
  
-  <label>Content provider name (optional) <input id="provider" type="text"/></label>
-
-  <label>Content ID (optional) <input id="contentid" type="text" aria-describedby="contentid-help"/>
-  <small id="contentid-help">An identifier supplied by a content provider, used to identify a piece of content and
-  derive key IDs and content keys</small>
+  <label>Content provider name (optional) 
+    <input id="provider" type="text"/>
   </label>
 
-  <label>Policy (optional) <input id="policy" type="text" aria-describedby="policy-help"/>
-    <small id="policy-help">A policy name that refers to a stored policy in Widevine service</small></label>
+  <label>Content ID (optional) 
+    <input id="contentid" type="text" aria-describedby="contentid-help"/>
+    <small id="contentid-help">An identifier supplied by a content provider, used to identify a
+    piece of content and derive key IDs and content keys</small>
+  </label>
+
+  <label>Policy (optional) 
+    <input id="policy" type="text" aria-describedby="policy-help"/>
+    <small id="policy-help">A policy name that refers to a stored policy in Widevine service</small>
+  </label>
 
   <fieldset>
     <legend>Encryption algorithm (optional)</legend>
@@ -51,7 +56,8 @@ in Base 64 format.
   </fieldset>
 
   <label>Crypto period index, for media using key rotation (an uint32, optional)
-    <input id="crypto_period_index" type="number"/></label>
+    <input id="crypto_period_index" type="number"/>
+  </label>
 
   <fieldset>
     <legend>Protection scheme</legend>
