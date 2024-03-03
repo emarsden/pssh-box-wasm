@@ -57,20 +57,20 @@ jobs:
            # First build a whl for construct v2.8.8. It's required by the old version of pymp4 used
            # in pywidevine, but is not available as a whl on pypi.
            cd $TMPSRC
-           wget https://files.pythonhosted.org/packages/b6/2c/66bab4fef920ef8caa3e180ea601475b2cbbe196255b18f1c58215940607/construct-2.8.8.tar.gz
+           wget --quiet https://files.pythonhosted.org/packages/b6/2c/66bab4fef920ef8caa3e180ea601475b2cbbe196255b18f1c58215940607/construct-2.8.8.tar.gz
            tar xzf construct-2.8.8.tar.gz
            cd construct-2.8.8
            python3 setup.py bdist_wheel
            cp dist/construct-2.8.8-py2.py3-none-any.whl $PYODIDE_DIST
            cd $TMPSRC
+           echo Fetching pyodide repository
            git clone https://github.com/pyodide/pyodide.git
            cd pyodide
            # Build pyodide using emscripten, as per
            # https://pyodide.org/en/stable/development/building-from-sources.html
            podman run -ti --tty -v $PWD:/src \
               docker.io/pyodide/pyodide-env:20240127-chrome114-firefox122-py312 \
-              /bin/bash -c "PYODIDE_PACKAGES=\"pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\"
-              make"
+              /bin/bash -c "PYODIDE_PACKAGES=\"pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
            # This leaves output files in $TMPSRC/pyodide/dist. We don't need all the built files,
            # because for many necessary Python packages we can use the official whl tarballs.
            # Copy only the necessary files to $PYODIDE_DIST.

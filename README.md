@@ -27,6 +27,7 @@ for the following DRM systems:
 - Irdeto
 - Marlin
 - Nagra
+- The unofficial variant of Apple FairPlay that is used for DASH-like streaming by Netflix
 - Common Encryption
 
 PSSH boxes contain (depending on the DRM system) information on the key_ID for which to obtain a
