@@ -5,10 +5,10 @@ description = "Decode a DRM PSSH box directly in your browser (WASM)."
 
 
 <form>
-  <textarea id="pssh" class="form-input" name="pssh"
+  <input id="pssh" class="form-input" name="pssh"
     data-tooltip="The PSSH box (DRM initialization data)"
-    pattern="[0-9ABCDEFabcdef+=]+"
-    placeholder="PSSH..."></textarea>
+    pattern="[A-Za-z0-9\-\+\/]*={0,3}" 
+    placeholder="PSSH..." required />
   <fieldset>
     <legend>Input format:</legend>
       <label><input type="radio" name="fmt" id="fmt_base64" checked />Base64 (normal format in an <tt>mpd</tt> manifest)</label>
