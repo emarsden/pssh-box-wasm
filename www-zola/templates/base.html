@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet"
-       href="https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.3/pico.classless.amber.min.css"
-       integrity="sha512-YB08WWnuKue7dhY2B4brKA30xfkpCHLSPR/KyjSNOzA8hPYaizvjjhdrvnU3h6dg04xRNCdhgcsfUXTeLAlA7Q=="
-       crossorigin="anonymous" referrerpolicy="no-referrer" />
+       href="https://cdnjs.cloudflare.com/ajax/libs/picocss/2.0.6/pico.classless.amber.min.css"
+       integrity="sha512-cvZ+H1jLsMMrg5Dn+rJf5PROXudvcR7GkDgFI/padEnnaqcds8MWN/18OeO8hXzfCm01WuL434jn6RehXPv3TA=="
+       crossorigin="anonymous"
+       referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ get_url(path='css/custom.css') }}">
     <link rel="icon" href="{{ get_url(path='img/pssh-box-logo.svg') }}">
     <link rel="canonical" href="{{ current_url}}" />
@@ -41,8 +42,7 @@
       &nbsp;<img src="{{ get_url(path='img/beta.svg') }}" style="width:1em;position:relative;top:-1.1ex;" alt="">
       </h1>
       {% else %}
-      <img src="{{ get_url(path='img/pssh-box-logo.svg') }}" style="width:1em" alt="">&nbsp;
-      <h1>PSSH box tools</h1>
+      <h1><img src="{{ get_url(path='img/pssh-box-logo.svg') }}" style="width:1em" alt="">&nbsp;PSSH box tools</h1>
       {% endif %}
 
       <noscript>
