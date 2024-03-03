@@ -64,7 +64,7 @@ jobs:
            cp dist/construct-2.8.8-py2.py3-none-any.whl $PYODIDE_DIST
            cd $TMPSRC
            echo Fetching pyodide repository
-           git clone https://github.com/pyodide/pyodide.git
+           git clone --quiet --depth 1 https://github.com/pyodide/pyodide.git
            cd pyodide
            # Build pyodide using emscripten, as per
            # https://pyodide.org/en/stable/development/building-from-sources.html
@@ -75,7 +75,6 @@ jobs:
            # because for many necessary Python packages we can use the official whl tarballs.
            # Copy only the necessary files to $PYODIDE_DIST.
            cd $TMPSRC/pyodide/dist
-           cp construct-*whl $PYODIDE_DIST
            cp ffi.d.ts $PYODIDE_DIST
            cp package.json $PYODIDE_DIST
            cp protobuf-4*wasm32.whl $PYODIDE_DIST
