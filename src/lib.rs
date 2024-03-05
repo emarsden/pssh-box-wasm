@@ -1,7 +1,6 @@
 //! lib.rs -- WASM code for parsing/printing PSSH boxes
 
 use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{Request, RequestInit, Response};
 use url::Url;
@@ -100,6 +99,7 @@ pub fn pssh_base64_to_html(b64: &str) -> Result<String, JsError> {
 
 // TODO: should probably define a struct to hold all these arguments, or use WidevinePsshData
 // directly from javascript.
+#[allow(clippy::too_many_arguments)]
 #[wasm_bindgen]
 pub fn generate_widevine_pssh_b64(
     version: u8,
@@ -120,7 +120,7 @@ pub fn generate_widevine_pssh_b64(
     pssh.version = version;
     let kids: Vec<String> = serde_wasm_bindgen::from_value(kids_jsval)?;
     for kid_string in &kids {
-        let kid = DRMKeyId::try_from(&kid_string as &str)
+        let kid = DRMKeyId::try_from(kid_string as &str)
             .map_err(|_| PsshBoxWasmError::InvalidKeyId(format!("{kid_string:?}")))?;
         pssh.add_key_id(kid);
     }
@@ -158,7 +158,7 @@ pub fn generate_widevine_pssh_b64(
         // We include the key ids twice, in case some consumers only look at the PSSH data for them
         // and ignore the box header.
         for kid_string in &kids {
-            let kid = DRMKeyId::try_from(&kid_string as &str)
+            let kid = DRMKeyId::try_from(kid_string as &str)
                 .map_err(|_| PsshBoxWasmError::InvalidKeyId(format!("{kid_string:?}")))?;
             pd.key_id.push(kid.to_bytes());
         }
