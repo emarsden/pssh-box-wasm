@@ -92,7 +92,7 @@ jobs:
            echo === Final content of PYODIDE_DIST directory
            ls -l $PYODIDE_DIST
 
-      - uses: actions/configure-pages@v4
+      - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
