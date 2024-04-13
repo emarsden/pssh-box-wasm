@@ -31,6 +31,7 @@ var wvd_b64 = null;
 
 const py_import = `
 import js
+import traceback
 import pyodide
 import requests
 import pywidevine
@@ -61,7 +62,7 @@ device = Device.loads(wvd)
 # log += "<p>CDM device: {}".format(device)
 cdm = Cdm.from_device(device)
 session_id = cdm.open()
-log += "<p>Session: {}".format(session_id)
+log += "<p>CDM session: {}".format(session_id)
 challenge = cdm.get_license_challenge(session_id, pypssh)
 have_license = False
 try:
@@ -70,22 +71,28 @@ try:
    have_license = True
 except pyodide.ffi.JsException as e:
    out.innerHTML = "<h3>Pyodide error {}</h3>".format(e.name)
-   log += "<p>{}".format(e)
+   log += "<p>Pyodide error {}".format(e)
+   log += "<p>Backtrace: " + traceback.format_exc()
 except requests.exceptions.Timeout as e:
    out.innerHTML = "<h3>Python timeout requesting licence</h3>"
-   log += "<p>{}".format(e)
+   log += "<p>Request timeout {}".format(e)
+   log += "<p>Backtrace: " + traceback.format_exc()
 except requests.exceptions.SSLError as e:
    out.innerHTML = "<h3>Python SSLError</h3>"
-   log += "<p>{}".format(e)
+   log += "<p>SSL error {}".format(e)
+   log += "<p>Backtrace: " + traceback.format_exc()
 except requests.exceptions.ConnectionError as e:
    out.innerHTML = "<h3>Python ConnectionError</h3>"
-   log += "<p>{}".format(e)
+   log += "<p>Licence request connection error {}".format(e)
+   log += "<p>Backtrace: " + traceback.format_exc()
 except requests.exceptions.HTTPError as e:
    out.innerHTML = "<h3>Python HTTPError</h3>"
-   log += "<p>{}".format(e)
+   log += "<p>License request HTTP error {}".format(e)
+   log += "<p>Backtrace: " + traceback.format_exc()
 except Exception as e:
    out.innerHTML = "<h3>Generic Python Error</h3>"
-   log += "<p>{}".format(e)
+   log += "<p>Generic Python error requesting license: {}".format(e)
+   log += "<p>Backtrace: " + traceback.format_exc()
 if have_license:
    cdm.parse_license(session_id, license.content)
    html = "<table class=wrapping>"
@@ -128,7 +135,6 @@ async function get_license(wvd_b64, pssh, lurl, headers) {
         out.style.visibility = "visible";
         out.classList.add("failed");
         out.innerHTML = "<h3>Not a valid PSSH</h3>";
-        console.log("about to return after PSSH()");
         return;
     }
     try {
@@ -139,6 +145,7 @@ async function get_license(wvd_b64, pssh, lurl, headers) {
         } else {
             out.innerHTML = "Licence request failed (see logs)";
             out.classList.add("failed");
+            updateLogElement();
         }
     } catch (e) {
         updateLogElement();
