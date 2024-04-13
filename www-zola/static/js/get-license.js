@@ -72,6 +72,8 @@ try:
 except pyodide.ffi.JsException as e:
    out.innerHTML = "<h3>Pyodide error {}</h3>".format(e.name)
    log += "<p>Pyodide error {}".format(e)
+   if e.name == "NetworkError":
+      log += "<p><strong>Hint</strong>: a NetworkError is often caused by a missing HTTP header containing an authentication token."
    log += "<p>Backtrace: " + traceback.format_exc()
 except requests.exceptions.Timeout as e:
    out.innerHTML = "<h3>Python timeout requesting licence</h3>"
@@ -103,6 +105,7 @@ if have_license:
            keys += f"--key {key.kid.hex}:{key.key.hex()} "
    html += "</table>"
    cdm.close(session_id)
+   html += "<p><strong>Commandline arguments</strong> for dash-mpd-cli or N_m3u8DL-RE:</p>"
    html += "<p id=cmdline><tt>" + keys + "</tt></p>"
 have_license
 `;
@@ -141,7 +144,10 @@ async function get_license(wvd_b64, pssh, lurl, headers) {
         let have_license = pyodide.runPython(py_license);
         updateLogElement();
         if (have_license) {
-           out.innerHTML = "<h3>License keys</h3>" + pyodide.globals.get("html");
+            out.classList.remove("failed");
+            out.scrollIntoView();
+            out.style.visibility = "visible";
+            out.innerHTML = "<h3>Decryption keys</h3>" + pyodide.globals.get("html");
         } else {
             out.innerHTML = "Licence request failed (see logs)";
             out.classList.add("failed");

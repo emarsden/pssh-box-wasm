@@ -7,8 +7,9 @@ description = "Make a Widevine DRM license request directly from your browser (W
 Make a Widevine DRM license request to **obtain decryption keys** for a specified PSSH. The license request is
 sent from your browser, so should be using any cookies that have been set for the license URL.
 
-This tool is pretty bleeding edge. Check your browser’s Javascript console if things don’t work; you
-may see some extra diagnostics information.
+This tool is pretty bleeding edge, and error reporting is not very robust. Check your browser’s
+Javascript console if things don’t work; you may see some extra diagnostics information.
+
 
 <!-- Some test vectors
 
