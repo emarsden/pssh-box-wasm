@@ -58,14 +58,14 @@ const py_license = `
 out = js.document.getElementById("output")
 wvd = b64decode(wvd_b64)
 device = Device.loads(wvd)
-log += "<p>CDM device: {}".format(device)
+# log += "<p>CDM device: {}".format(device)
 cdm = Cdm.from_device(device)
 session_id = cdm.open()
 log += "<p>Session: {}".format(session_id)
 challenge = cdm.get_license_challenge(session_id, pypssh)
 have_license = False
 try:
-   license = requests.post(lurl, headers=headers, data=challenge)
+   license = requests.post(lurl, headers=headers, data=challenge, timeout=20.0)
    license.raise_for_status()
    have_license = True
 except pyodide.ffi.JsException as e:
