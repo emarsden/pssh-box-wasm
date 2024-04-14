@@ -4,11 +4,20 @@ description = "Make a Widevine DRM license request directly from your browser (W
 +++
 
 
-Make a Widevine DRM license request to **obtain decryption keys** for a specified PSSH. The license request is
-sent from your browser, so should be using any cookies that have been set for the license URL.
+Make a Widevine DRM license request to **obtain decryption keys** for a specified PSSH. This tool is
+implemented in WebAssembly and runs fully inside your web browser, meaning: 
 
-This tool is pretty bleeding edge, and error reporting is not very robust. Check your browser’s
-Javascript console if things don’t work; you may see some extra diagnostics information.
+- from a software hygiene perspective, the code is running **safely sandboxed** by your web browser
+
+- it doesn't require any software installation on your computer
+
+- the license request is sent from your browser, so should be using any cookies that have been set
+  for the license URL. It will respect any proxy settings and browser-based VPNs that you have set
+  up.
+
+
+**Note**: This tool is pretty bleeding edge, and error reporting is not very robust. Check your
+browser’s Javascript console if things don’t work; you may see some extra diagnostics information.
 
 
 <!-- Some test vectors
@@ -67,10 +76,30 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
   <p id="log"></p>
 </details>
 
-**Privacy**: This tool is implemented in [WebAssembly](https://webassembly.org/) (WASM) and runs
-fully inside your web browser (there is no server backend; the tool will work fully offline). It
-uses the [Pywidevine library](https://github.com/devine-dl/pywidevine) compiled to WASM using
-the excellent [Pyodide](https://pyodide.org/) tool.
+
+### Limitations
+
+Some DRM license servers require specific information as a “payload” of the `POST` request made to
+the license server, in addition to or instead of specific HTTP headers. This tool doesn’t currently
+support sending a `POST` payload.
+
+
+### About
+
+How does this tool work? It uses the [Pywidevine library](https://github.com/devine-dl/pywidevine)
+which provides a Python implementation of the Widevine Content Decryption Module (CDM). This module
+(normally implemented in obfuscated software that runs in your web browser, or on specially
+protected hardware on your CPU or GPU) is responsible for making requests to the server that
+provides the licenses (the decryption keys) for playing media “protected” by DRM. The pywidevine
+library is compiled to WASM using the excellent [Pyodide](https://pyodide.org/) tool so that it can
+run fully inside your web browser (there is no server backend for this software).
+
+**Privacy**: this software is running fully inside your web browser. All the content is kindly
+hosted by [GitHub pages](https://pages.github.com/) (please note their [privacy
+policy](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement). We don’t
+log visits (no web analytics, no cookies), but GitHub pages provides anonymized web traffic graphs.
+
+
 
 <script defer src="../pyodide/pyodide.js"></script>
 <script type="module" src="../js/get-license.js"></script>
