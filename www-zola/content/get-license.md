@@ -59,6 +59,8 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
   </label>
   <label><abbr title="Content Decryption Module">CDM</abbr> device in WVD format (required)
     <input id="wvd" type="file" required aria-invalid="true"/>
+    <small>Your quest to obtain a valid CDM (Widevine device file) is not something that we can 
+    help you with here. Those who seek guidance often ask their favorite search engine.</small>
   </label>
   <button id="go" data-tooltip="Request the decryption keys" disabled>Request license</button>
 </form>
