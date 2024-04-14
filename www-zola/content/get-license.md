@@ -79,6 +79,19 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
 </details>
 
 
+
+### Why did my request fail?
+
+Your request for decryption keys may fail with a NetworkError or an HTTP Error (click on the
+<i>Pywidevine logs</i> button for details), and check your browser’s Javascript console for further
+information. The most likely reason for this is that the license server is checking for specific
+authorization information in the headers of the request (for instance, `X-AxDRM-Message` headers for
+servers using the standard Axinom license software). Play the content in your web browser, check
+the details of the request made to the license server in your browser’s Web Developer tools, and
+make sure the same information is included in the <i>Headers</i> field above, formatted as a Python
+dict.
+
+
 ### Limitations
 
 Some DRM license servers require specific information as a “payload” of the `POST` request made to
