@@ -60,7 +60,9 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
   <label><abbr title="Content Decryption Module">CDM</abbr> device in WVD format (required)
     <input id="wvd" type="file" required aria-invalid="true"/>
     <small>Your quest to obtain a valid CDM (Widevine device file) is not something that we can 
-    help you with here. Those who seek guidance often ask their favorite search engine.</small>
+    help you with here. Those who seek guidance often ask their favorite search engine. Please note
+    that your WVD stays on your local machine; it is not uploaded anywhere (verify this by checking
+  the network requests made by this page, in the browsers' Web Developer tools).</small>
   </label>
   <button id="go" data-tooltip="Request the decryption keys" disabled>Request license</button>
 </form>
@@ -111,7 +113,7 @@ run fully inside your web browser (there is no server backend for this software)
 
 **Privacy**: this software is running fully inside your web browser. All the content is kindly
 hosted by [GitHub pages](https://pages.github.com/) (please note their [privacy
-policy](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement). We don’t
+policy](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)). We don’t
 log visits (no web analytics, no cookies), but GitHub pages provides anonymized web traffic graphs.
 
 
