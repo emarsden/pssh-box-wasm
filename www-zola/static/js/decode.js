@@ -16,6 +16,7 @@ document.getElementById("go").addEventListener("click", function(e) {
         } else {
             decoded = pssh_hex_to_html(input);
         }
+        out.classList.remove("failed");
         out.innerHTML = "<strong>Decoded</strong><br>" + decoded;
     } catch (e) {
         out.innerHTML = e.toString()

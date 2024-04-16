@@ -62,7 +62,7 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
     <small>Your quest to obtain a valid CDM (Widevine device file) is not something that we can 
     help you with here. Those who seek guidance often ask their favorite search engine. Please note
     that your WVD stays on your local machine; it is not uploaded anywhere (verify this by checking
-  the network requests made by this page, in the browsers' Web Developer tools).</small>
+  the network requests made by this page, in the browser’s Web Developer tools).</small>
   </label>
   <button id="go" data-tooltip="Request the decryption keys" disabled>Request license</button>
 </form>

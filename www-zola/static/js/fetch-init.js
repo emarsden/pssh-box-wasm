@@ -12,6 +12,7 @@ document.getElementById("go").addEventListener("click", function(e) {
     out.scrollIntoView();
     fetch_pssh_data(url)
         .then((html) => {
+            out.classList.remove("failed");
             out.innerHTML = "<strong>PSSH data</strong><br>" + html;
         })
         .catch((e) => {

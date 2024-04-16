@@ -36,6 +36,7 @@ document.getElementById("go").addEventListener("click", function(e) {
         }
         let encoded = generate_widevine_pssh_b64(version, [kid], provider, contentid, policy,
                                                  cpi, protection_scheme, algorithm);
+        out.classList.remove("failed");
         out.innerHTML = "<h3>Generated PSSH in Base 64</h3>" + "<p>" + encoded;
     } catch (e) {
         out.innerHTML = e.toString()
