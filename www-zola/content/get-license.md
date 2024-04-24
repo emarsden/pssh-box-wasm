@@ -34,6 +34,16 @@ PSSH: AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQFTDToGkERGqRoTOhFaqMQQ==
 License URL: "https://drm-widevine-licensing.axtest.net/AcquireLicense"
 Headers: { "X-AxDRM-Message":
 		"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJjb21fa2V5X2lkIjoiNjllNTQwODgtZTllMC00NTMwLThjMWEtMWViNmRjZDBkMTRlIiwibWVzc2FnZSI6eyJ0eXBlIjoiZW50aXRsZW1lbnRfbWVzc2FnZSIsImtleXMiOlt7ImlkIjoiMTUzMGQzYTAtNjkwNC00NDZhLTkxYTEtMzNhMTE1YWE4YzQxIn0seyJpZCI6ImM4M2ViNjM5LWU2NjQtNDNmOC1hZTk4LTQwMzliMGMxM2IyZCJ9LHsiaWQiOiIzZDhjYzc2Mi0yN2FjLTQwMGYtOTg5Zi04YWI1ZGM3ZDc3NzUifSx7ImlkIjoiYmQ4ZGFkNTgtMDMyZC00YzI1LTg5ZmEtYzdiNzEwZTgyYWMyIn1dfX0.9t18lFmZFVHMzpoZxYDyqOS0Bk_evGhTBw_F2JnAK2k" } 
+
+PSSH: AAAAiHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAAGgIARIQ/cLLPhsIRgGbp42ISWfyxiJQZXlKaGMzTmxkRWxrSWpvaVpXMXdjbVZtYzNSeVpXRnRjM0JsYTJVeUxXUmhjMmhxY3kxdmJuUmxiblJ3Y205MFpXTjBhVzl1Y21WbUluMD04AA==
+License URL: https://lic.staging.drmtoday.com/license-proxy-widevine/cenc/?specConform=true
+Headers: { "x-dt-custom-data": "ewogICAgInVzZXJJZCI6ICJhd3MtZWxlbWVudGFsOjpzcGVrZS10ZXN0aW5nIiwKICAgICJzZXNzaW9uSWQiOiAidGVzdHNlc3Npb25tdWx0aWtleSIsCiAgICAibWVyY2hhbnQiOiAiYXdzLWVsZW1lbnRhbCIKfQ==" }
+
+
+PSSH: AAAAk3Bzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAAHMIARIgMWYzNWVhZjBjYjI5NDA2YTkyODg4YjEwOTdlOWEzOWEaBHZkbXMiR2Y3ODIyZWJlMmQwMjQ0Y2RhMWMwNjUxZTBlM2IyZjVmX2FldWYxXzI2M2EwNTI5MzUyMTRiZjhhOGVjYWViN2NhZTQ0MDkw
+License URL: https://content.uplynk.com/wv
+Headers: empty
+
     
 and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.html
     -->
