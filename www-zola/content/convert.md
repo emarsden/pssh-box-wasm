@@ -13,6 +13,14 @@ description = "This tool converts CDM files to file format"
       </label>
    </article>
 </form>
+<form id="fromWVD">
+   <article>
+      <header><h3>WVD to Blobs</h3></header>
+      <label>CDM device in WVD format
+         <input id="wvd" type="file" required aria-invalid="true"/>
+      </label>
+   </article>
+</form>
 
 **Privacy**: this tool is implemented in WebAssembly and runs locally in your web browser. Once
 loaded, it will run fully offline.
