@@ -249,7 +249,7 @@ wvd.addEventListener("input", function (e) {
             maybeValidateSubmit();
         } else {
             wvd.setAttribute("aria-invalid", true);
-            wvd.setCustomValidity("Need a valid URL for the license server");
+            wvd.setCustomValidity("Need a CDM in WVD format");
             document.getElementById("go").setAttribute("disabled", true);
         }
     };
