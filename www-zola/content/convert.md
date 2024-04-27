@@ -1,7 +1,11 @@
 +++
 title = "Convert CDM"
-description = "This tool converts CDM files to file format"
+description = "This tool converts CDM files format"
 +++
+<article id="loading">
+  <i>Loading Pyodide library… (around 11MB of WASM code)</i>
+  <progress></progress>
+</article>
 <form>
    <article>
       <header><h3>Blobs to WVD</h3></header>
@@ -28,4 +32,5 @@ description = "This tool converts CDM files to file format"
 loaded, it will run fully offline.
 
 
+<script defer src="../pyodide/pyodide.js"></script>
 <script type="module" src="../js/convert.js"></script>
