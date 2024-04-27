@@ -1,10 +1,15 @@
 # pssh-box-wasm
 
-A web-based tool to serialize and deserialize (create and decode) PSSH boxes, as used for the
-initialization of DRM systems. A tool that allows you to request decryption keys (obtain a license)
-from a Widevine DRM licensing server is also provided. This tool uses code from the Rust crate
-[pssh-box](https://crates.io/crates/pssh-box) compiled to WASM, and runs fully in your web browser
-(there is no server backend; the tool will work fully offline once loaded).
+A collection of web-based tools for working with PSSH boxes (as used for the initialization of DRM
+systems) and with Widevine Content Decryption Modules (CDMs). There are tools that allow you to:
+
+- serialize and deserialize (create and decode) PSSH boxes
+- request decryption keys (obtain a license) from a Widevine DRM licensing server
+- convert Widevine CDMs between blob format and “WVD” format
+
+The tools use code from the Rust crate [pssh-box](https://crates.io/crates/pssh-box) compiled to
+WebAssembly (WASM), and run fully in your web browser (there is no server backend; the tools will work fully
+offline once loaded).
 
 > [!TIP]
 > You can [try out the tools in your browser](https://emarsden.github.io/pssh-box-wasm/). 
