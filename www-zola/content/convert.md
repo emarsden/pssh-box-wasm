@@ -1,11 +1,27 @@
 +++
 title = "Convert CDM"
-description = "This tool converts CDM files format"
+description = "A web-based tool to convert Widevine CDMs into different formats."
 +++
+
+
 <article id="loading">
   <i>Loading Pyodide library… (around 11MB of WASM code)</i>
   <progress></progress>
 </article>
+
+A Content Decryption Module (CDM) is the component of a DRM system that makes requests to a license
+server to obtain decryption keys and decrypts and decodes encrypted media content for display. The
+pywidevine library is a software implementation of the Widevine CDM. Creating an “L3” CDM requires
+two binary blobs: a client identifier (generally saved in a file named `client_id.bin`) and a
+private key (generally saved in a file name `client_id.pem`). These can be combined to generate a
+CDM in “WVD” (Widevine Device) format, which can be saved in a single file (named for instance
+`mycdm.wvd`).
+
+This tool allows you to convert a client ID and private key into a WVD file (blobs -> WVD), or the
+opposite route of extracting the client ID and private key blobs from a WVD file. The tool uses the
+pywidevine library compiled to WebAssembly, running fully inside your browser.
+
+
 <form>
    <article>
       <header><h3>Blobs to WVD</h3></header>
@@ -18,6 +34,9 @@ description = "This tool converts CDM files format"
       <button id="toWVDGo">Convert</button>
    </article>
 </form>
+
+<hr>
+
 <form>
    <article>
       <header><h3>WVD to Blobs</h3></header>
