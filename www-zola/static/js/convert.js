@@ -83,10 +83,10 @@ function downloadResult(ret, name){
 document.getElementById("toWVDGo").addEventListener("click", async function(e) {
     e.preventDefault();
     e.target.style.cursor = "wait";
-    let cid=b64.encode(
+    window.cid=b64.encode(
         (await document.getElementById("cid").files[0].arrayBuffer())
     );
-    let prk=b64.encode(
+    window.prk=b64.encode(
         (await document.getElementById("prk").files[0].arrayBuffer())
     );
     let result=await pyodide.runPythonAsync(toWVD);
@@ -96,7 +96,7 @@ document.getElementById("toWVDGo").addEventListener("click", async function(e) {
 document.getElementById("fromWVDGo").addEventListener("click", async function(e) {
     e.preventDefault();
     e.target.style.cursor = "wait";
-    let wvd=b64.encode(
+    window.wvd=b64.encode(
         (await document.getElementById("wvd").files[0].arrayBuffer())
     )
     let result=await pyodide.runPythonAsync(fromWVD);
