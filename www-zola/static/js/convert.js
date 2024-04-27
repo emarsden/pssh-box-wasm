@@ -26,7 +26,7 @@ console.log("Pyodide + pywidevine loaded");
 document.getElementById("loading").style.display = "none";
 pyodide.setDebug(true)
 
-toWVD=`
+const toWVD=`
 import js
 from base64 import b64encode, b64decode
 from pywidevine.device import Device, DeviceTypes
@@ -41,7 +41,7 @@ device = Device(client_id=cid,
 b64encode(device).decode()
 `
 
-fromWVD=`
+const fromWVD=`
 import js
 from zipfile import ZipFile
 from base64 import b64encode, b64decode
@@ -83,22 +83,22 @@ function downloadResult(ret, name){
 document.getElementById("toWVDGo").addEventListener("click", async function(e) {
     e.preventDefault();
     e.target.style.cursor = "wait";
-    cid=b64.encode(
+    let cid=b64.encode(
         (await document.getElementById("cid").files[0].arrayBuffer())
     );
-    prk=b64.encode(
+    let prk=b64.encode(
         (await document.getElementById("prk").files[0].arrayBuffer())
     );
-    result=await pyodide.runPythonAsync(toWVD);
+    let result=await pyodide.runPythonAsync(toWVD);
     downloadResult(result, "device.wvd")
 });
 
 document.getElementById("fromWVDGo").addEventListener("click", async function(e) {
     e.preventDefault();
     e.target.style.cursor = "wait";
-    wvd=b64.encode(
+    let wvd=b64.encode(
         (await document.getElementById("wvd").files[0].arrayBuffer())
     )
-    result=await pyodide.runPythonAsync(fromWVD);
+    let result=await pyodide.runPythonAsync(fromWVD);
     downloadResult(result, "device_blobs.zip")
 });
