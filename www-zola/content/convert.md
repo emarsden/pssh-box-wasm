@@ -1,6 +1,7 @@
 +++
 title = "Convert CDM"
 description = "A web-based tool to convert Widevine CDMs into different formats."
+authors = ["FoxRefire"]
 +++
 
 

@@ -21,7 +21,11 @@
     <meta name="description" content="{{ page.description }}" />
    {% endif -%}
 {% endif %}
+    {% if page.authors -%}
+    <meta name="author" content="{{ page.authors | join(sep=', ') }}" />
+    {% else -%}
     <meta name="author" content="Eric Marsden">
+    {% endif -%}
     <!-- GitHub pages set a very short 600 second expiry time in their cache-control header, which
     we can't override. We attempt to tell the browser that the content can be cached longer, even if
     in principle an HTTP header overrides an HTML meta tag. -->
