@@ -41,16 +41,38 @@ device = Device(client_id=cid,
 b64encode(device).decode()
 `
 
+fromWVD=`
+import js
+from zipfile import ZipFile
+from base64 import b64encode, b64decode
+from pywidevine.device import Device
+
+wvd=b64decode(js.wvd.encode())
+device = Device.loads(wvd)
+
+with ZipFile('device_blobs.zip', 'w') as zf:
+    with zf.open('device_client_id_blob', 'w') as f:
+        f.write(device.client_id.SerializeToString())
+
+    with zf.open('device_private_key', 'w') as f:
+        f.write(device.private_key.export_key(format='PEM'))
+
+    with zf.open('device_info.txt', 'w') as f:
+        f.write(str(device).encode())
+
+b64encode(open('device_blobs.zip', 'rb').read()).decode()
+`
+
 const b64 = {
     decode: s => Uint8Array.from(atob(s), c => c.charCodeAt(0)),
     encode: b => btoa(String.fromCharCode(...new Uint8Array(b)))
 };
 
-function downloadResult(ret){
+function downloadResult(ret, name){
     let blob =new Blob([b64.decode(ret)], {type: "octet/stream"});
     let blobLink = URL.createObjectURL(blob);
     let a = document.createElement('a');
-    a.download = 'device.wvd';
+    a.download = name;
     a.href = blobLink
     document.body.appendChild(a);
     a.click();
@@ -68,5 +90,15 @@ document.getElementById("toWVDGo").addEventListener("click", async function(e) {
         (await document.getElementById("prk").files[0].arrayBuffer())
     );
     result=await pyodide.runPythonAsync(toWVD);
-    downloadResult(result)
-}
+    downloadResult(result, "device.wvd")
+});
+
+document.getElementById("fromWVDGo").addEventListener("click", async function(e) {
+    e.preventDefault();
+    e.target.style.cursor = "wait";
+    wvd=b64.encode(
+        (await document.getElementById("wvd").files[0].arrayBuffer())
+    )
+    result=await pyodide.runPythonAsync(fromWVD);
+    downloadResult(result, "device_blobs.zip")
+});
