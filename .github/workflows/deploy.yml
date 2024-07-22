@@ -48,10 +48,19 @@ jobs:
            find dist -type f -print0 | xargs -0 chmod 644
            # Build pyodide (Python compiled to WASM) alongside our required Python libraries
            # compiled to WASM (in particular those that include C code, such pycryptodome and
-           # protobuf).
+           # protobuf). We need to build the construct package v2.8.8 specially, because it's not
+           # packaged as a wheel on pypi.
            PYODIDE_DIST=`pwd`/dist/pyodide
            mkdir -p $PYODIDE_DIST
            TMPSRC=`mktemp -d /tmp/pyodide-buildXXXX`
+           # First build a whl for construct v2.8.8. It's required by the old version of pymp4 used
+           # in pywidevine, but is not available as a whl on pypi.
+           cd $TMPSRC
+           wget --quiet https://files.pythonhosted.org/packages/b6/2c/66bab4fef920ef8caa3e180ea601475b2cbbe196255b18f1c58215940607/construct-2.8.8.tar.gz
+           tar xzf construct-2.8.8.tar.gz
+           cd construct-2.8.8
+           python3 setup.py bdist_wheel
+           cp dist/construct-2.8.8-py2.py3-none-any.whl $PYODIDE_DIST
            echo === Content of PYODIDE_DIST directory:
            ls -l $PYODIDE_DIST
            cd $TMPSRC
