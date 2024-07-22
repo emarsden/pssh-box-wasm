@@ -21,6 +21,8 @@ PSSH boxes are used:
 
 - in a `<cenc:pssh>` element in a DASH MPD manifest
 
+- in DRM initialization data passed to the Encrypted Media Extension of a web browser
+
 - in an `EXT-X-SESSION-KEY` field of an m3u8 playlist
 
 

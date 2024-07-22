@@ -26,11 +26,12 @@ find a <abbr title="Protection System Specific Header">PSSH</abbr> box:
 
 - inside a `<cenc:pssh>` element in a DASH MPD manifest;
 - within a `pssh` box in the initialization segment of a media stream (an fMP4 fragment);
+- in DRM initialization data passed to the Encrypted Media Extension of a web browser;
 - in an `EXT-X-SESSION-KEY` field of an m3u8 playlist.
 
 
 This tool is implemented in [WebAssembly](https://webassembly.org/) (WASM) and runs fully inside
-your web browser (there is no server backend; the tool will work fully offline). It supports the
+your web browser. There is no server backend; the tool will work fully offline. It supports the
 following <abbr title="Digital Rights Management">DRM</abbr> systems:
 
 - <a href="https://www.widevine.com/solutions/widevine-drm">Widevine</a>, owned by Google, widely used for DASH streaming
