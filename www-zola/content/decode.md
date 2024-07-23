@@ -7,7 +7,7 @@ description = "Decode a DRM PSSH box directly in your browser (WASM)."
 <form>
   <input id="pssh" class="form-input" name="pssh"
     data-tooltip="The PSSH box (DRM initialization data)"
-    pattern="[A-Za-z0-9\-\+\/]*={0,3}" 
+    pattern="\s*[A-Za-z0-9\-\+\/]*={0,3}\s*"
     placeholder="PSSH..." required />
   <fieldset>
     <legend>Input format:</legend>
