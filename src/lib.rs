@@ -210,6 +210,7 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
     if positions.is_empty() {
         html += "No PSSH initialization data found.";
     }
+    html += format!("<!-- box buffer positions: {positions:?} -->");
     for pos in positions {
         let boxes = from_buffer(&segment[pos..])
             .map_err(|_| PsshBoxWasmError::Other(String::from("extracting PSSH data")))?;
