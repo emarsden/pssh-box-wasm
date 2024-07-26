@@ -39,8 +39,9 @@ pub fn code_version() -> String {
 }
 
 fn psshboxes_to_html(boxes: &PsshBoxVec) -> String {
-    let mut out = String::from("");
+    let mut outputs = Vec::new();
     for pssh in boxes.iter() {
+        let mut out = String::from("");
         out += "<table class='wrapping'>";
         out += &format!("  <tr><td style='width:14em'>PSSH in Base64</td><td><tt style='font-size:60%'>{}</tt></td></tr>\n",
                         pssh.clone().to_base64());
@@ -73,9 +74,10 @@ fn psshboxes_to_html(boxes: &PsshBoxVec) -> String {
                         "Data that is specific to this DRM system");
         out += &String::from("</table>");
         out += &format!("<p>Condensed format: <tt style='font-size:60%'>{}</tt></p>", encode_text(&pssh.to_string()));
-        out += &String::from("<div class='flourish'></div>");
+        outputs.push(out);
     }
-    out
+    outputs.join("\n<div class='flourish'></div>\n")
+
 }
 
 #[wasm_bindgen]
