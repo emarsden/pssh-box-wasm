@@ -191,8 +191,7 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
         .map_err(|e| PsshBoxWasmError::WebSys(format!("{e:?}")))?;
     let window = web_sys::window()
             .ok_or(PsshBoxWasmError::WebSys(String::from("web_sys::window")))?;
-    let resp_value = JsFuture::from(window.fetch_with_request(&request))
-        .await
+    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await
         .map_err(|e| PsshBoxWasmError::WebSys(format!("{e:?}")))?;
     let resp: Response = resp_value.dyn_into()
         .map_err(|e| PsshBoxWasmError::WebSys(format!("{e:?}")))?;
@@ -201,8 +200,7 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
     }
     let rab = resp.array_buffer()
         .map_err(|e| PsshBoxWasmError::WebSys(format!("{e:?}")))?;
-    let segment_buf = JsFuture::from(rab)
-        .await
+    let segment_buf = JsFuture::from(rab).await
         .map_err(|e| PsshBoxWasmError::WebSys(format!("{e:?}")))?;
     let segment = js_sys::Uint8Array::new(&segment_buf).to_vec();
     let positions: Vec<usize> = find_iter(&segment).collect();
@@ -211,11 +209,19 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
     if positions.is_empty() {
         outputs.push(String::from("No PSSH initialization data found."));
     }
+    // We need to be careful not to double count PSSH boxes here. The from_buffer() method will read
+    // all boxes in the buffer, and they may overlap with boxes at later start positions.
+    let mut boxes = PsshBoxVec::new();
     for pos in positions {
-        let boxes = from_buffer(&segment[pos..])
+        let new_boxes = from_buffer(&segment[pos..])
             .map_err(|_| PsshBoxWasmError::Other(String::from("extracting PSSH data")))?;
-        outputs.push(psshboxes_to_html(&boxes));
+        for new in new_boxes {
+            if !boxes.contains(&new) {
+                boxes.add(new);
+            }
+        }
     }
+    outputs.push(psshboxes_to_html(&boxes));
     outputs.reverse();
     Ok(outputs.join(&String::from("\n<div class='flourish'></div>\n")))
 }
