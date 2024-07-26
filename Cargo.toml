@@ -1,6 +1,6 @@
 [package]
 name = "pssh-box-wasm"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Eric Marsden <eric.marsden@risk-engineering.org>"]
 description = "Parsing and printing PSSH boxes, in WebAssembly."
 repository = "https://github.com/emarsden/pssh-box-wasm/"

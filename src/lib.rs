@@ -205,7 +205,6 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
     let segment = js_sys::Uint8Array::new(&segment_buf).to_vec();
     let positions: Vec<usize> = find_iter(&segment).collect();
     let mut outputs = Vec::new();
-    outputs.push(format!("<!-- box buffer positions: {positions:?} -->"));
     if positions.is_empty() {
         outputs.push(String::from("No PSSH initialization data found."));
     }
