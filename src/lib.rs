@@ -206,15 +206,16 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
         .map_err(|e| PsshBoxWasmError::WebSys(format!("{e:?}")))?;
     let segment = js_sys::Uint8Array::new(&segment_buf).to_vec();
     let positions: Vec<usize> = find_iter(&segment).collect();
-    let mut html = String::new();
+    let mut outputs = Vec::new();
+    outputs.push(format!("<!-- box buffer positions: {positions:?} -->"));
     if positions.is_empty() {
-        html += "No PSSH initialization data found.";
+        outputs.push(String::from("No PSSH initialization data found."));
     }
-    html += &format!("<!-- box buffer positions: {positions:?} -->");
     for pos in positions {
         let boxes = from_buffer(&segment[pos..])
             .map_err(|_| PsshBoxWasmError::Other(String::from("extracting PSSH data")))?;
-        html += &psshboxes_to_html(&boxes);
+        outputs.push(psshboxes_to_html(&boxes));
     }
-    Ok(html)
+    outputs.reverse();
+    Ok(outputs.join(&String::from("\n<div class='flourish'></div>\n")))
 }
