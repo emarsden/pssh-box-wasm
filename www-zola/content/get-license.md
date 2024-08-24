@@ -9,7 +9,7 @@ implemented in WebAssembly and runs fully inside your web browser, meaning:
 
 - from a software hygiene perspective, the code is running **safely sandboxed** by your web browser
 
-- it doesn't require any software installation on your computer
+- it doesn’t require any software installation on your computer
 
 - the license request is sent from your browser, so should be using any cookies that have been set
   for the license URL. It will respect any proxy settings and browser-based VPNs that you have set
@@ -53,7 +53,7 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
     <input id="pssh" class="form-input" name="pssh"
       data-tooltip="The PSSH box (DRM initialization data)"
       pattern="\s*[A-Za-z0-9\-\+\/]*={0,3}\s*" placeholder="PSSH..." 
-      required aria-invalid="true" />
+      required aria-invalid="true" autofocus />
     <small>The DRM initialization data (PSSH box). Make sure this contains no spaces.</small>
   </label>
   <label>License server URL (required)
@@ -72,7 +72,7 @@ and https://reference.dashif.org/dash.js/latest/samples/drm/license-wrapping.htm
     <small>Your quest to obtain a valid CDM (Widevine device file) is not something that we can 
     help you with here. Those who seek guidance often ask their favorite search engine. Please note
     that your WVD stays on your local machine; it is not uploaded anywhere (verify this by checking
-  the network requests made by this page, in the browser’s Web Developer tools).</small>
+    the network requests made by this page, in the browser’s Web Developer tools).</small>
   </label>
   <button id="go" data-tooltip="Request the decryption keys" disabled>Request license</button>
 </form>
@@ -106,9 +106,9 @@ dict.
 
 ### Limitations
 
-Some DRM license servers require specific information as a “payload” of the `POST` request made to
+Some DRM license servers require specific information as a “payload” (body) of the `POST` request made to
 the license server, in addition to or instead of specific HTTP headers. This tool doesn’t currently
-support sending a `POST` payload.
+support sending a `POST` payload body.
 
 
 ### About

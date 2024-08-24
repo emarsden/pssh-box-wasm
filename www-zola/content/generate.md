@@ -13,7 +13,7 @@ in Base 64 format.
       <label data-tooltip="Key ID (32 hex characters)">Key ID or KID (required argument)
         <input id="kid" type="text" minlength="32" maxlength="36"
         pattern="[0-9ABCDEFabcdef]{8}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{4}-?[0-9ABCDEFabcdef]{12}" 
-        required />
+        required autofocus />
       </label>
   </article>
 

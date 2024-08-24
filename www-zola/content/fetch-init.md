@@ -6,7 +6,7 @@ description = "Fetch PSSH data from a DASH initialization segment."
 
 <form>
    <fieldset role="group">
-      <input id="url" type="url" placeholder="https://server.com/init.mp4"/>
+      <input id="url" type="url" placeholder="https://server.com/init.mp4" autofocus />
       <button id="go"
          data-tooltip="Fetch MP4 segment and decode any PSSH boxes"
          data-placement="left">Fetch</button>
