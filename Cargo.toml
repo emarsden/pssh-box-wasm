@@ -11,9 +11,9 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-pssh-box = "0.1.9"
+pssh-box = "0.1.10"
 serde = { version = "1.0.210", features = ["derive"] }
-serde_json = "1.0.129"
+serde_json = "1.0.132"
 url = "2.5.2"
 hex = "0.4.3"
 wasm-bindgen = { version = "0.2.95" }
