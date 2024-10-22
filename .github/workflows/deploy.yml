@@ -85,7 +85,7 @@ jobs:
            cp package.json $PYODIDE_DIST
            echo == protobuf4ls
            ls protob*
-           cp protobuf-4*wasm32.whl $PYODIDE_DIST
+           cp protobuf-5*wasm32.whl $PYODIDE_DIST
            cp pycryptodome-3*wasm32.whl $PYODIDE_DIST
            cp pyodide.asm.js $PYODIDE_DIST
            cp pyodide.asm.wasm $PYODIDE_DIST
