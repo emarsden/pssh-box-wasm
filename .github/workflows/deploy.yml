@@ -76,7 +76,7 @@ jobs:
            # https://pyodide.org/en/latest/development/building-from-sources.html
            podman run -ti --tty -v $PWD:/src \
               docker.io/pyodide/pyodide-env:20241106-chrome130-firefox132 \
-              /bin/bash -c "PYODIDE_PACKAGES=\"pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
+              /bin/bash -c "PYODIDE_PACKAGES=\"micropip,pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
            # This leaves output files in $TMPSRC/pyodide/dist. We don't need all the built files,
            # because for many necessary Python packages we can use the official whl tarballs.
            # Copy only the necessary files to $PYODIDE_DIST.
@@ -96,6 +96,7 @@ jobs:
            cp pyodide.mjs $PYODIDE_DIST
            cp pyodide.mjs.map $PYODIDE_DIST
            cp python_stdlib.zip $PYODIDE_DIST
+           cp micropip* $PYODIDE_DIST
            echo === Final content of PYODIDE_DIST directory
            ls -l $PYODIDE_DIST
 
