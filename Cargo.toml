@@ -13,15 +13,15 @@ crate-type = ["cdylib"]
 [dependencies]
 pssh-box = "0.1.10"
 serde = { version = "1.0.214", features = ["derive"] }
-serde_json = "1.0.132"
-url = "2.5.2"
+serde_json = "1.0.133"
+url = "2.5.4"
 hex = "0.4.3"
 wasm-bindgen = { version = "0.2.95" }
 serde-wasm-bindgen = "0.6.5"
 wasm-bindgen-futures = "0.4.43"
 log = "0.4.22"
 wasm-log = "0.3.1"
-js-sys = "0.3.69"
+js-sys = "0.3.72"
 console_error_panic_hook = "0.1.7"
 html-escape = "0.2.13"
 thiserror = "2.0.3"
