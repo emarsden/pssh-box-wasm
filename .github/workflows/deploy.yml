@@ -96,6 +96,7 @@ jobs:
            cp pyodide.mjs $PYODIDE_DIST
            cp pyodide.mjs.map $PYODIDE_DIST
            cp python_stdlib.zip $PYODIDE_DIST
+           cp request*whl $PYODIDE_DIST
            cp micropip* $PYODIDE_DIST
            echo === Final content of PYODIDE_DIST directory
            ls -l $PYODIDE_DIST
