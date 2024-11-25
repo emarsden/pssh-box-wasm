@@ -48,6 +48,39 @@ pywidevine library compiled to WebAssembly, running fully inside your browser.
    </article>
 </form>
 
+
+## Playready support
+
+This provides experimental interface to the [pyplayready](https://github.com/ready-dl/pyplayready)
+library for Playready support in Python.
+
+<form>
+   <article>
+      <header><h3>Blobs to Playready device (.prd)</h3></header>
+      <label data-tooltip="group_cert.bin">Group certificate
+         <input id="prgroupcert" type="file" required aria-invalid="true"/>
+      </label>
+      <label data-tooltip="group_key.pem">Group key
+         <input id="prgroupkey" type="file" required aria-invalid="true"/>
+      </label>
+      <button id="to_playready_device">Convert</button>
+   </article>
+</form>
+
+<hr>
+
+<form>
+   <article>
+      <header><h3>PRD to blobs</h3></header>
+      <label>Playready device in .prd format
+         <input id="prdevice" type="file" required aria-invalid="true"/>
+      </label>
+      <button id="export_playready_device">Convert</button>
+   </article>
+</form>
+
+
+
 **Privacy**: this tool is implemented in WebAssembly and runs locally in your web browser. Once
 loaded, it will run fully offline.
 
