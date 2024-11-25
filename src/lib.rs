@@ -181,7 +181,7 @@ pub async fn fetch_pssh_data(url: &str) -> Result<String, JsError> {
             return Err(PsshBoxWasmError::Parsing(format!("invalid URL: {e:?}")).into());
         },
     }
-    let mut opts = RequestInit::new();
+    let opts = RequestInit::new();
     opts.set_method("GET");
     let request = Request::new_with_str_and_init(url, &opts)
         .or(Err(PsshBoxWasmError::WebSys(String::from("creating Request"))))?;
