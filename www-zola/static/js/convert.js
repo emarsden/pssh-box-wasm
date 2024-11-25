@@ -26,6 +26,7 @@ let pyodide = await loadPyodide({ packages: myPackages });
 console.log("Pyodide + pywidevine loaded");
 document.getElementById("loading").style.display = "none";
 pyodide.setDebug(true)
+micropip.install('pyplayready')
 
 const to_WVD=`
 import js
