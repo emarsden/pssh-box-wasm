@@ -123,6 +123,7 @@ from base64 import b64encode, b64decode
 from Crypto.Random import get_random_bytes
 from pyplayready.ecc_key import ECCKey
 from pyplayready.bcert import CertificateChain, Certificate
+from pyplayready.device import Device
 
 group_certificate = b64decode(js.prgroupcert.encode())
 group_key = b64decode(js.prgroupkey.encode())
@@ -145,6 +146,7 @@ device = Device(
     encryption_key=encryption_key.dumps(),
     signing_key=signing_key.dumps()
 )
+print("Playready device: " + device)
 prd_bin = device.dumps()
 b64encode(prd_bin).decode()
 `
@@ -152,11 +154,12 @@ b64encode(prd_bin).decode()
 const export_playready_device=`
 import js
 from zipfile import ZipFile
+from pyplayready.device import Device
 from base64 import b64encode, b64decode
 
 prd_bin = b64decode(js.prdevice.encode())
 device = Device.loads(prd_bin)
-log(device.get_name())
+print("Playready device: " + device.get_name())
 with ZipFile('device_blobs.zip', 'w') as zf:
     with zf.open('bgroupcert.dat', 'w') as f:
         f.write(device.group_certificate.dumps())
@@ -188,7 +191,7 @@ document.getElementById("export_playready_device").addEventListener("click", asy
     e.target.style.cursor = "wait";
     window.prdevice = b64.encode(
         (await document.getElementById("prdevice").files[0].arrayBuffer())
-    )
+    );
     let result = await pyodide.runPythonAsync(export_playready_device);
     downloadResult(result, "device_blobs.zip")
 });
