@@ -16,7 +16,6 @@ const myPackages = [
     "https://files.pythonhosted.org/packages/28/76/e6222113b83e3622caa4bb41032d0b1bf785250607392e1b778aca0b8a7d/charset_normalizer-3.3.2-py3-none-any.whl",
     "pycryptodome",
     "protobuf",
-    "requests",
     "micropip",
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
@@ -28,7 +27,8 @@ document.getElementById("loading").style.display = "none";
 pyodide.setDebug(true);
 await pyodide.loadPackage("micropip");
 const micropip = pyodide.pyimport("micropip");
-await micropip.install('pyplayready');
+// Resolving dependencies leads to version errors with the requests package that is bundled with pyodide.
+await micropip.install('pyplayready', deps=False);
 console.log("pyplayready library loaded");
 
 const to_WVD=`
