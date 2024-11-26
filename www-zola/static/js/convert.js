@@ -15,7 +15,7 @@ const myPackages = [
     "https://files.pythonhosted.org/packages/ba/06/a07f096c664aeb9f01624f858c3add0a4e913d6c96257acb4fce61e7de14/certifi-2024.2.2-py3-none-any.whl",
     "https://files.pythonhosted.org/packages/28/76/e6222113b83e3622caa4bb41032d0b1bf785250607392e1b778aca0b8a7d/charset_normalizer-3.3.2-py3-none-any.whl",
     "pycryptodome",
-    "ECPy",
+    "https://files.pythonhosted.org/packages/e8/35/4a113189f7138035a21bd255d30dc7bffc77c942c93b7948d2eac2e22429/ECPy-1.2.5-py3-none-any.whl",
     "protobuf",
     "micropip",
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
