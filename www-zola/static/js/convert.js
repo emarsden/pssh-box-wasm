@@ -19,17 +19,18 @@ const myPackages = [
     "micropip",
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl"
+    "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl",
+    "https://files.pythonhosted.org/packages/34/1a/a7935148b162d2fc8969a2ade98638d314a89fbe93e5bed9614ed19d3ca5/pyplayready-0.3.6-py3-none-any.whl"
 ]
 let pyodide = await loadPyodide({ packages: myPackages });
 console.log("Pyodide + pywidevine loaded");
 document.getElementById("loading").style.display = "none";
 pyodide.setDebug(true);
-await pyodide.loadPackage("micropip");
-const micropip = pyodide.pyimport("micropip");
+// await pyodide.loadPackage("micropip");
+// const micropip = pyodide.pyimport("micropip");
 // Resolving dependencies leads to version errors with the requests package that is bundled with pyodide.
-await micropip.install('pyplayready', deps=False);
-console.log("pyplayready library loaded");
+// await micropip.install('pyplayready', deps=False);
+// console.log("pyplayready library loaded");
 
 const to_WVD=`
 import js
