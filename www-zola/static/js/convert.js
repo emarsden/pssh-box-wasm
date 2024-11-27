@@ -6,6 +6,9 @@ init().then(() => {
 // Normally we could load these simply with "micropip.install('pywidevine')". However, pywidevine
 // version 1.8.0 depends on pymp4 version 1.4.0, which depends on a very old version of construct,
 // v2.8.8, for which a prebuilt wheel is not available on pip. Therefore, we load our packages manually.
+//
+// Trying to execute code from pyplayready leads to an ImportError:
+//   cannot import name 'PaddedString' from 'construct' (/lib/python3.12/site-packages/construct/__init__.py)
 const myPackages = [
     "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
     "https://files.pythonhosted.org/packages/a2/73/a68704750a7679d0b6d3ad7aa8d4da8e14e151ae82e6fee774e6e0d05ec8/urllib3-2.2.1-py3-none-any.whl",
@@ -21,7 +24,7 @@ const myPackages = [
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
     "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/34/1a/a7935148b162d2fc8969a2ade98638d314a89fbe93e5bed9614ed19d3ca5/pyplayready-0.3.6-py3-none-any.whl"
+    "https://files.pythonhosted.org/packages/c5/f6/d9d9e38597f48e472eb5308b4448866bed5c1a8cad23bfa1a6099b57bda5/pyplayready-0.3.7-py3-none-any.whl"
 ]
 let pyodide = await loadPyodide({ packages: myPackages });
 console.log("Pyodide + pywidevine loaded");
