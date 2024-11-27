@@ -3,6 +3,34 @@ init().then(() => {
     document.getElementById("version").innerHTML = code_version();
 });
 
+// For tab support, from https://rwdevelopment.github.io/tabs_js/
+const _ = el => [...document.querySelectorAll(el)];
+_('[role=tab]')[0].setAttribute('aria-current', true);
+
+_('[role=tab]').forEach(tab=> {
+  tab.addEventListener('click', (e) => {
+
+        e.preventDefault();
+
+        !e.target.hasAttribute('aria-current') ?
+        e.target.setAttribute('aria-current', true) :
+        null;
+
+        _('[role=tab]').forEach(t=> {
+          t.hasAttribute('aria-current') && t != e.target ?
+          t.removeAttribute('aria-current') :
+          null;
+        });
+
+        _('[role=tabpanel]').forEach(tp=> {
+          _('[role=tabpanel]').indexOf(tp) == _('[role=tab]').indexOf(e.target) ?
+          tp.removeAttribute('hidden') :
+          tp.setAttribute('hidden', true);
+        });
+
+  });
+});
+
 // Normally we could load these simply with "micropip.install('pywidevine')". However, pywidevine
 // version 1.8.0 depends on pymp4 version 1.4.0, which depends on a very old version of construct,
 // v2.8.8, for which a prebuilt wheel is not available on pip. Therefore, we load our packages manually.
@@ -20,7 +48,8 @@ const myPackages = [
     "pycryptodome",
     "https://files.pythonhosted.org/packages/e8/35/4a113189f7138035a21bd255d30dc7bffc77c942c93b7948d2eac2e22429/ECPy-1.2.5-py3-none-any.whl",
     "protobuf",
-    "micropip",
+    // "micropip",
+    "xmltodict",
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
     "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl",
