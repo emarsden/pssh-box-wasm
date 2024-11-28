@@ -16,6 +16,8 @@ nav[aria-label=breadcrumb] ul li:not(:last-child) ::after {
 }
 [role=tab] {
   border-bottom: 2px solid transparent;
+  font-size: 140%;
+  font-weight: bold;
   padding: var(--nav-link-spacing-vertical) calc(var(--nav-link-spacing-horizontal)*1.5);
   user-select: none;
   color: var(--secondary);
@@ -71,8 +73,7 @@ device is defined. It works for both Widevine and Playready CDM devices.
 
 <section>
   <div role="tabpanel">
-  <h3>Widevine</h3>
-
+  <!-- Widevine -->
   The pywidevine library is a software implementation of the Widevine CDM. Creating an “L3” CDM
   requires two binary blobs: a client identifier (generally saved in a file named `client_id.bin`) and
   a private key (generally saved in a file name `client_id.pem`). These can be combined to generate a
@@ -85,7 +86,7 @@ device is defined. It works for both Widevine and Playready CDM devices.
 
   <form>
      <article>
-        <header><h3>Blobs to WVD</h3></header>
+        <header><strong>Blobs to WVD</strong></header>
         <label data-tooltip="device_client_id_blob or client_id.bin">Client ID
            <input id="cid" type="file" required aria-invalid="true"/>
         </label>
@@ -100,7 +101,7 @@ device is defined. It works for both Widevine and Playready CDM devices.
 
   <form>
      <article>
-        <header><h3>WVD to Blobs</h3></header>
+        <header><strong>WVD to Blobs</strong></header>
         <label>CDM device in WVD format
            <input id="wvd" type="file" required aria-invalid="true"/>
         </label>
@@ -110,14 +111,16 @@ device is defined. It works for both Widevine and Playready CDM devices.
   </div>
 
   <div role="tabpanel" hidden>
-  <h3>Playready</h3>
+  <!-- Playready -->
 
-  This provides experimental interface to the [pyplayready](https://github.com/ready-dl/pyplayready)
-  library for Playready support in Python.
+  The [pyplayready](https://github.com/ready-dl/pyplayready) library is a software implementation of
+  a Playready CDM. You can create a Playready device (`.prd` file) from a group certificate file and
+  a group key file (two binary “blobs”), or given a `.prd` device, can extract the binary blobs. 
+  This tool uses the pyplayready library compiled to WebAssembly, running fully inside your browser.
 
   <form>
      <article>
-        <header><h3>Blobs to Playready device (.prd)</h3></header>
+        <header><strong>Blobs to Playready device (.prd)</strong></header>
         <label data-tooltip="group_cert.bin">Group certificate
            <input id="prgroupcert" type="file" required aria-invalid="true"/>
         </label>
@@ -132,7 +135,7 @@ device is defined. It works for both Widevine and Playready CDM devices.
 
   <form>
      <article>
-        <header><h3>PRD to blobs</h3></header>
+        <header><strong>PRD to blobs</strong></header>
         <label>Playready device in .prd format
            <input id="prdevice" type="file" required aria-invalid="true"/>
         </label>
