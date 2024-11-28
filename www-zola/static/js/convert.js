@@ -170,7 +170,7 @@ device = Device(
     encryption_key=encryption_key.dumps(),
     signing_key=signing_key.dumps()
 )
-print("Playready device: " + device)
+print("Playready device: {}".format(device))
 prd_bin = device.dumps()
 b64encode(prd_bin).decode()
 `
@@ -193,8 +193,6 @@ with ZipFile('device_blobs.zip', 'w') as zf:
 
     with zf.open('zprivsig.dat', 'w') as f:
         f.write(device.signing_key.dumps())
-ziplen = len(open('device_blobs.zip', 'rb').read())
-print("device_blobs.zip length is {}".format(ziplen))
 b64encode(open('device_blobs.zip', 'rb').read()).decode()
 `
 
@@ -219,6 +217,5 @@ document.getElementById("export_playready_device").addEventListener("click", asy
         (await document.getElementById("prdevice").files[0].arrayBuffer())
     );
     let result = await pyodide.runPythonAsync(export_playready_device);
-    console.log("export_playready_device returned result of length " + result.length);
     downloadResult(result, "device_blobs.zip")
 });
