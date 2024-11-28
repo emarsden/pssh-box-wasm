@@ -3,13 +3,12 @@ init().then(() => {
     document.getElementById("version").innerHTML = code_version();
 });
 
-// For tab support, from https://rwdevelopment.github.io/tabs_js/
+// For content tab support, from https://rwdevelopment.github.io/tabs_js/
 const _ = el => [...document.querySelectorAll(el)];
 _('[role=tab]')[0].setAttribute('aria-current', true);
 
 _('[role=tab]').forEach(tab=> {
   tab.addEventListener('click', (e) => {
-
         e.preventDefault();
 
         !e.target.hasAttribute('aria-current') ?
@@ -34,9 +33,6 @@ _('[role=tab]').forEach(tab=> {
 // Normally we could load these simply with "micropip.install('pywidevine')". However, pywidevine
 // version 1.8.0 depends on pymp4 version 1.4.0, which depends on a very old version of construct,
 // v2.8.8, for which a prebuilt wheel is not available on pip. Therefore, we load our packages manually.
-//
-// Trying to execute code from pyplayready leads to an ImportError:
-//   cannot import name 'PaddedString' from 'construct' (/lib/python3.12/site-packages/construct/__init__.py)
 const myPackages = [
     "https://files.pythonhosted.org/packages/d6/45/fc303eb433e8a2a271739c98e953728422fa61a3c1f36077a49e395c972e/xmltodict-0.14.2-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
@@ -49,7 +45,6 @@ const myPackages = [
     "pycryptodome",
     "https://files.pythonhosted.org/packages/e8/35/4a113189f7138035a21bd255d30dc7bffc77c942c93b7948d2eac2e22429/ECPy-1.2.5-py3-none-any.whl",
     "protobuf",
-    // "micropip",
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
     "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl",
@@ -59,11 +54,6 @@ let pyodide = await loadPyodide({ packages: myPackages });
 console.log("Pyodide + pywidevine loaded");
 document.getElementById("loading").style.display = "none";
 pyodide.setDebug(true);
-// await pyodide.loadPackage("micropip");
-// const micropip = pyodide.pyimport("micropip");
-// Resolving dependencies leads to version errors with the requests package that is bundled with pyodide.
-// await micropip.install('pyplayready', deps=False);
-// console.log("pyplayready library loaded");
 
 const to_WVD=`
 import js
@@ -108,12 +98,13 @@ const b64 = {
 };
 
 function downloadResult(ret, name) {
+    console.log("downloadResult on object named " + name + " of length " + ret.length);
     // let blob = new Blob([b64.decode(ret)], {type: "octet/stream"});
     let blob = new Blob([b64.decode(ret)], {type: "application/octet-stream"});
     let blobLink = URL.createObjectURL(blob);
     let a = document.createElement('a');
     a.download = name;
-    a.href = blobLink
+    a.href = blobLink;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -202,7 +193,8 @@ with ZipFile('device_blobs.zip', 'w') as zf:
 
     with zf.open('zprivsig.dat', 'w') as f:
         f.write(device.signing_key.dumps())
-
+ziplen = len(open('device_blobs.zip', 'rb').read())
+print("device_blobs.zip length is {}".format(ziplen))
 b64encode(open('device_blobs.zip', 'rb').read()).decode()
 `
 
@@ -216,6 +208,7 @@ document.getElementById("to_playready_device").addEventListener("click", async f
         (await document.getElementById("prgroupkey").files[0].arrayBuffer())
     );
     let result = await pyodide.runPythonAsync(to_playready_device);
+    console.log("to_playready_device returned result of length " + result.length);
     downloadResult(result, "playready_device.prd")
 });
 
@@ -226,5 +219,6 @@ document.getElementById("export_playready_device").addEventListener("click", asy
         (await document.getElementById("prdevice").files[0].arrayBuffer())
     );
     let result = await pyodide.runPythonAsync(export_playready_device);
+    console.log("export_playready_device returned result of length " + result.length);
     downloadResult(result, "device_blobs.zip")
 });
