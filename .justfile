@@ -28,13 +28,13 @@ build_pyodide:
     DIST=`mktemp -d /tmp/pyodide-distXXXX`
     echo Building in $TMPSRC
     mkdir $TMPSRC/dist
-    (cd $TMPSRC && git clone https://github.com/pyodide/pyodide.git)
+    (cd $TMPSRC && git clone --quiet --recursive --depth 1 https://github.com/pyodide/pyodide.git)
     cd $TMPSRC/pyodide
     # Build pyodide using emscripten, as per
     # https://pyodide.org/en/stable/development/building-from-sources.html
     podman run -ti --tty -v $PWD:/src \
-       docker.io/pyodide/pyodide-env:20240127-chrome114-firefox122-py312 \
-       /bin/bash -c "PYODIDE_PACKAGES=\"pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
+       docker.io/pyodide/pyodide-env:20241106-chrome130-firefox132 \
+       /bin/bash -c "PYODIDE_PACKAGES=\"micropip,pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
     cp -r dist/* $TMPSRC/dist
     # Now we build a whl for construct v2.8.8 (not available on pypi)
     cd $TMPSRC
@@ -48,7 +48,7 @@ build_pyodide:
     cp construct-*whl $DIST
     cp ffi.d.ts $DIST
     cp package.json $DIST
-    cp protobuf-4*wasm32.whl $DIST
+    cp protobuf-5*wasm32.whl $DIST
     cp pycryptodome-3*wasm32.whl $DIST
     cp pyodide.asm.js $DIST
     cp pyodide.asm.wasm $DIST
@@ -59,6 +59,8 @@ build_pyodide:
     cp pyodide.mjs $DIST
     cp pyodide.mjs.map $DIST
     cp python_stdlib.zip $DIST
+    cp request*whl $DIST
+    cp micropip* $DIST
     echo Outputs are in $DIST
 
 
