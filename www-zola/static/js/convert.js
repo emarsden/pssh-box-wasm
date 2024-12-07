@@ -48,7 +48,7 @@ const myPackages = [
     "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
     "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
     "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/c5/f6/d9d9e38597f48e472eb5308b4448866bed5c1a8cad23bfa1a6099b57bda5/pyplayready-0.3.7-py3-none-any.whl"
+    "https://files.pythonhosted.org/packages/53/71/5d853cf6c3c919c2de67c329f41d3be59468213d95e8ef7b3d4207843475/pyplayready-0.4.4-py3-none-any.whl"
 ]
 let pyodide = await loadPyodide({ packages: myPackages });
 console.log("Pyodide + pywidevine loaded");
