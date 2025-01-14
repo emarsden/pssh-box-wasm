@@ -12,8 +12,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pssh-box = "0.1.10"
-serde = { version = "1.0.216", features = ["derive"] }
-serde_json = "1.0.134"
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.135"
 url = "2.5.4"
 hex = "0.4.3"
 wasm-bindgen = { version = "0.2.99" }
@@ -24,7 +24,7 @@ wasm-log = "0.3.1"
 js-sys = "0.3.76"
 console_error_panic_hook = "0.1.7"
 html-escape = "0.2.13"
-thiserror = "2.0.9"
+thiserror = "2.0.11"
 
 [dependencies.web-sys]
 version = "0.3.76"
