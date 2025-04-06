@@ -33,7 +33,7 @@ build_pyodide:
     # Build pyodide using emscripten, as per
     # https://pyodide.org/en/stable/development/building-from-sources.html
     podman run -ti --tty -v $PWD:/src \
-       docker.io/pyodide/pyodide-env:20241106-chrome130-firefox132 \
+       docker.io/pyodide/pyodide-env:20250311-chrome134-firefox136-py313 \
        /bin/bash -c "PYODIDE_PACKAGES=\"micropip,pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
     cp -r dist/* $TMPSRC/dist
     # Now we build a whl for construct v2.8.8 (not available on pypi)
@@ -48,7 +48,7 @@ build_pyodide:
     cp construct-*whl $DIST
     cp ffi.d.ts $DIST
     cp package.json $DIST
-    cp protobuf-5*wasm32.whl $DIST
+    cp protobuf-6*wasm32.whl $DIST
     cp pycryptodome-3*wasm32.whl $DIST
     cp pyodide.asm.js $DIST
     cp pyodide.asm.wasm $DIST
