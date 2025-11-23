@@ -74,6 +74,7 @@ jobs:
            echo === Fetching pyodide repository
            git clone --quiet --recursive --depth 1 https://github.com/pyodide/pyodide.git
            cd pyodide
+           git clone --quiet --depth 1 https://github.com/pyodide/pyodide-recipes
            # Build pyodide using emscripten, as per
            # https://pyodide.org/en/latest/development/building-from-sources.html
            podman run -ti --tty -v $PWD:/src \
