@@ -23,7 +23,7 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -42,6 +42,8 @@ jobs:
         with:
            tool: zola
 
+      # This builds our Rust code as WASM, then builds Pyodide alongside the Python
+      # libraries needed by pywidevine.
       - name: Build bundle
         run: |
            rm -rf dist/
@@ -75,8 +77,8 @@ jobs:
            # Build pyodide using emscripten, as per
            # https://pyodide.org/en/latest/development/building-from-sources.html
            podman run -ti --tty -v $PWD:/src \
-              docker.io/pyodide/pyodide-env:20250311-chrome134-firefox136-py313 \
-              /bin/bash -c "PYODIDE_PACKAGES=\"micropip,pycryptodome,pyyaml,protobuf,requests,lzma,hashlib\" make"
+             docker.io/pyodide/pyodide-env:20251004-chrome140-firefox140-py313 \
+             /bin/bash -c "make && pyodide build-recipes micropip,pycryptodome,pyyaml,protobuf,requests,lzma,hashlib --recipe-dir pyodide-recipes/packages --install"
            # This leaves output files in $TMPSRC/pyodide/dist. We don't need all the built files,
            # because for many necessary Python packages we can use the official whl tarballs.
            # Copy only the necessary files to $PYODIDE_DIST.
