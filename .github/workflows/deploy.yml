@@ -57,7 +57,7 @@ jobs:
            find dist -type d -print0 | xargs -0 chmod 755
            find dist -type f -print0 | xargs -0 chmod 644
            wget -q -O /tmp/construct.tgz https://files.pythonhosted.org/packages/b6/2c/66bab4fef920ef8caa3e180ea601475b2cbbe196255b18f1c58215940607/construct-2.8.8.tar.gz
-           tar xzf --directory=/tmp construct-2.8.8.tar.gz
+           tar xzf construct.tgz --directory=/tmp
            (cd /tmp/construct-2.8.8 && python3 setup.py bdist_wheel)
            cp /tmp/construct-2.8.8/dist/construct-2.8.8-py2.py3-none-any.whl dist
 
