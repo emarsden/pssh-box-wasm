@@ -10,18 +10,18 @@
     <link rel="stylesheet" href="{{ get_url(path='css/custom.css') }}">
     <link rel="icon" href="{{ get_url(path='img/pssh-box-logo.svg') }}">
     <link rel="canonical" href="{{ current_url}}" />
-{% if page -%}
-   {% if page.title -%}
-   <title>{{ page.title }}</title>
+{% if config.title -%}
+   {% if config.title -%}
+   <title>{{ config.title }}</title>
    {% else -%}
    <title>PSSH Box tools</title>
    {% endif -%}
-   {% if page.description -%}
+   {% if config.description -%}
     <meta name="description" content="{{ page.description }}" />
    {% endif -%}
 {% endif %}
-    {% if page.authors -%}
-    <meta name="author" content="{{ page.authors | join(sep=', ') }}" />
+    {% if config.extra.authors -%}
+    <meta name="author" content="{{ config.extra.authors | join(sep=', ') }}" />
     {% else -%}
     <meta name="author" content="Eric Marsden">
     {% endif -%}
