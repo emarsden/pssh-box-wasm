@@ -30,27 +30,16 @@ _('[role=tab]').forEach(tab=> {
   });
 });
 
-// Normally we could load these simply with "micropip.install('pywidevine')". However, pywidevine
-// version 1.8.0 depends on pymp4 version 1.4.0, which depends on a very old version of construct,
-// v2.8.8, for which a prebuilt wheel is not available on pip. Therefore, we load our packages manually.
-const myPackages = [
-    "https://files.pythonhosted.org/packages/d6/45/fc303eb433e8a2a271739c98e953728422fa61a3c1f36077a49e395c972e/xmltodict-0.14.2-py2.py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/a2/73/a68704750a7679d0b6d3ad7aa8d4da8e14e151ae82e6fee774e6e0d05ec8/urllib3-2.2.1-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/70/8e/0e2d847013cb52cd35b38c009bb167a1a26b2ce6cd6965bf26b47bc0bf44/requests-2.31.0-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/2d/14/d1bf3b7141ad5a42c26e4173a69e3e6529bd92b05bc587c570d28b6a3ce8/pyodide_http-0.2.1-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/c2/e7/a82b05cf63a603df6e68d59ae6a68bf5064484a0718ea5033660af4b54a9/idna-3.6-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/ba/06/a07f096c664aeb9f01624f858c3add0a4e913d6c96257acb4fce61e7de14/certifi-2024.2.2-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/28/76/e6222113b83e3622caa4bb41032d0b1bf785250607392e1b778aca0b8a7d/charset_normalizer-3.3.2-py3-none-any.whl",
-    "pycryptodome",
-    "https://files.pythonhosted.org/packages/e8/35/4a113189f7138035a21bd255d30dc7bffc77c942c93b7948d2eac2e22429/ECPy-1.2.5-py3-none-any.whl",
-    "protobuf",
-    "/pssh-box-wasm/pyodide/construct-2.8.8-py2.py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/41/9f/60f8a4c8e7767a8c34f5c42428662e03fa3e38ad18ba41fcc5370ee43263/pywidevine-1.8.0-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/aa/a2/27fea39af627c0ce5dbf6108bf969ea8f5fc9376d29f11282a80e3426f1d/pymp4-1.4.0-py3-none-any.whl",
-    "https://files.pythonhosted.org/packages/53/71/5d853cf6c3c919c2de67c329f41d3be59468213d95e8ef7b3d4207843475/pyplayready-0.4.4-py3-none-any.whl"
-]
+
+const myPackages = ["pycryptodome", "requests", "base64"];
 let pyodide = await loadPyodide({ packages: myPackages });
+await pyodide.loadPackage("micropip");
+const micropip = pyodide.pyimport("micropip");
+// This is an old version of the construct library which is not available in prepackaged whl format
+// on PyPI, so we use a local copy that we build ourselves.
+await micropip.install("../pkg/construct-2.8.8-py2.py3-none-any.whl");
+await micropip.install("pyodide-http");
+await micropip.install("pywidevine");
 console.log("Pyodide + pywidevine loaded");
 document.getElementById("loading").style.display = "none";
 pyodide.setDebug(true);
