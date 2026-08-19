@@ -24,6 +24,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7.0.1
+        with:
+           fetch-depth: 0
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -42,8 +44,9 @@ jobs:
         with:
            tool: zola
 
-      # This builds our Rust code as WASM, then builds Pyodide alongside the Python
-      # libraries needed by pywidevine.
+      # This builds our Rust code as WASM, then builds the version of the python construct library
+      # needed by pywidevine that isn't available as a prebuilt wheel on PyPI. We use a prebuilt
+      # version of pyodide distributed on a CDN.
       - name: Build bundle
         run: |
            rm -rf dist/
@@ -53,56 +56,10 @@ jobs:
            cp -r pkg dist
            find dist -type d -print0 | xargs -0 chmod 755
            find dist -type f -print0 | xargs -0 chmod 644
-           # Build pyodide (Python compiled to WASM) alongside our required Python libraries
-           # compiled to WASM (in particular those that include C code, such pycryptodome and
-           # protobuf). We need to build the construct package v2.8.8 (which is a dependency of
-           # pywidevine) specially, because it's not packaged as a wheel on pypi.
-           PYODIDE_DIST=`pwd`/dist/pyodide
-           mkdir -p $PYODIDE_DIST
-           TMPSRC=`mktemp -d /tmp/pyodide-buildXXXX`
-           # First build a whl for construct v2.8.8. It's required by the old version of pymp4 used
-           # in pywidevine, but is not available as a whl on pypi.
-           cd $TMPSRC
-           wget --quiet https://files.pythonhosted.org/packages/b6/2c/66bab4fef920ef8caa3e180ea601475b2cbbe196255b18f1c58215940607/construct-2.8.8.tar.gz
-           tar xzf construct-2.8.8.tar.gz
-           cd construct-2.8.8
-           python3 setup.py bdist_wheel
-           cp dist/construct-2.8.8-py2.py3-none-any.whl $PYODIDE_DIST
-           echo === Content of PYODIDE_DIST directory:
-           ls -l $PYODIDE_DIST
-           cd $TMPSRC
-           echo === Fetching pyodide repository
-           git clone --quiet --recursive --depth 1 https://github.com/pyodide/pyodide.git
-           cd pyodide
-           git clone --quiet --depth 1 https://github.com/pyodide/pyodide-recipes
-           # Build pyodide using emscripten, as per
-           # https://pyodide.org/en/latest/development/building-from-sources.html
-           podman run -ti --tty -v $PWD:/src \
-             docker.io/pyodide/pyodide-env:20251004-chrome140-firefox140-py313 \
-             /bin/bash -c "make && pyodide build-recipes micropip,pycryptodome,pyyaml,protobuf,requests,lzma,hashlib --recipe-dir pyodide-recipes/packages --install"
-           # This leaves output files in $TMPSRC/pyodide/dist. We don't need all the built files,
-           # because for many necessary Python packages we can use the official whl tarballs.
-           # Copy only the necessary files to $PYODIDE_DIST.
-           cd $TMPSRC/pyodide/dist
-           cp ffi.d.ts $PYODIDE_DIST
-           cp package.json $PYODIDE_DIST
-           echo == protobuf4ls
-           ls protob*
-           cp protobuf-6*wasm32.whl $PYODIDE_DIST
-           cp pycryptodome-3*wasm32.whl $PYODIDE_DIST
-           cp pyodide.asm.js $PYODIDE_DIST
-           cp pyodide.asm.wasm $PYODIDE_DIST
-           cp pyodide.d.ts $PYODIDE_DIST
-           cp pyodide.js $PYODIDE_DIST
-           cp pyodide.js.map $PYODIDE_DIST 
-           cp pyodide-lock.json $PYODIDE_DIST
-           cp pyodide.mjs $PYODIDE_DIST
-           cp pyodide.mjs.map $PYODIDE_DIST
-           cp python_stdlib.zip $PYODIDE_DIST
-           cp request*whl $PYODIDE_DIST
-           cp micropip* $PYODIDE_DIST
-           echo === Final content of PYODIDE_DIST directory
-           ls -l $PYODIDE_DIST
+           wget -q -O /tmp/construct.tgz https://files.pythonhosted.org/packages/b6/2c/66bab4fef920ef8caa3e180ea601475b2cbbe196255b18f1c58215940607/construct-2.8.8.tar.gz
+           tar xzf --directory=/tmp construct-2.8.8.tar.gz
+           (cd /tmp/construct-2.8.8 && python3 setup.py bdist_wheel)
+           cp /tmp/construct-2.8.8/dist/construct-2.8.8-py2.py3-none-any.whl dist
 
       - uses: actions/configure-pages@v6
 
