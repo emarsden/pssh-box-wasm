@@ -31,7 +31,7 @@ _('[role=tab]').forEach(tab=> {
 });
 
 
-const myPackages = ["pycryptodome", "requests", "base64"];
+const myPackages = ["pycryptodome", "requests"];
 let pyodide = await loadPyodide({ packages: myPackages });
 await pyodide.loadPackage("micropip");
 const micropip = pyodide.pyimport("micropip");
