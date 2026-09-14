@@ -40,7 +40,7 @@ jobs:
         with:
            version: 'latest'
 
-      - uses: taiki-e/install-action@v2.87.2
+      - uses: taiki-e/install-action@v2.87.8
         with:
            tool: zola
 
