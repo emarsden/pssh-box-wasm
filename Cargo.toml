@@ -23,7 +23,7 @@ log = "0.4.33"
 wasm-log = "0.3.1"
 js-sys = "0.3.104"
 console_error_panic_hook = "0.1.7"
-html-escape = "0.2.15"
+html-escape = "0.3.0"
 thiserror = "2.0.20"
 
 [dependencies.web-sys]
