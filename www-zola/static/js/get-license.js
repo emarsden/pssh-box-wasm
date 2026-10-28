@@ -150,6 +150,27 @@ async function get_license(wvd_b64, pssh, lurl, headers) {
     out.style.visibility = "visible";
 }
 
+function isPrivateOrMetadataUrl(urlStr) {
+    try {
+        const host = new URL(urlStr).hostname.toLowerCase();
+        if (host === "localhost" || host === "169.254.169.254" || host === "metadata.google.internal") {
+            return true;
+        }
+        const ipMatch = host.match(/^(\d{1,3})\.(\d{1,3})\.\d{1,3}\.\d{1,3}$/);
+        if (ipMatch) {
+            const a = parseInt(ipMatch[1], 10);
+            const b = parseInt(ipMatch[2], 10);
+            if (a === 10 || a === 127 || (a === 172 && b >= 16 && b <= 31) ||
+                (a === 192 && b === 168) || (a === 169 && b === 254)) {
+                return true;
+            }
+        }
+        return false;
+    } catch (e) {
+        return true;
+    }
+}
+
 document.getElementById("go").addEventListener("click", async function(e) {
     e.preventDefault();
     e.target.style.cursor = "wait";
@@ -160,6 +181,11 @@ document.getElementById("go").addEventListener("click", async function(e) {
     const pssh = document.getElementById("pssh").value.trim();
     const lurl = document.getElementById("lurl").value.trim();
     const headers = document.getElementById("headers").value.trim();
+    if (isPrivateOrMetadataUrl(lurl)) {
+        alert("License server URL must not point to a private, loopback or cloud metadata address");
+        e.target.style.cursor = "auto";
+        return;
+    }
     get_license(wvd_b64, pssh, lurl, headers);
     e.target.style.cursor = "auto";
 });
